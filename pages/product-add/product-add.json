@@ -1,0 +1,9 @@
+{
+  "backgroundColor": "#f5f5f5",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "dynamic-attributes": "/components/dynamic-attributes/dynamic-attributes",
+    "linear-icon": "/components/linear-icon/linear-icon"
+  },
+  "navigationStyle": "custom"
+}

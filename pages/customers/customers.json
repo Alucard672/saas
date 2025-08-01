@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "linear-icon": "/components/linear-icon/linear-icon"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "客户管理"
+}

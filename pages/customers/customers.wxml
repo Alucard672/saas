@@ -1,0 +1,149 @@
+<!--pages/customers/customers.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 搜索和筛选 -->
+    <view class="search-section">
+      <view class="search-bar">
+        <input 
+          class="search-input" 
+          placeholder="搜索客户姓名、电话..." 
+          value="{{searchKeyword}}"
+          bindinput="onSearchInput"
+        />
+        <linear-icon type="search" size="medium" weight="medium" color="primary"></linear-icon>
+      </view>
+      
+      <view class="filter-tabs">
+        <view 
+          class="filter-tab {{activeFilter === 'all' ? 'active' : ''}}"
+          data-filter="all"
+          bindtap="onFilterChange"
+        >
+          全部
+        </view>
+        <view 
+          class="filter-tab {{activeFilter === 'vip' ? 'active' : ''}}"
+          data-filter="vip"
+          bindtap="onFilterChange"
+        >
+          VIP
+        </view>
+        <view 
+          class="filter-tab {{activeFilter === 'regular' ? 'active' : ''}}"
+          data-filter="regular"
+          bindtap="onFilterChange"
+        >
+          普通
+        </view>
+        <view 
+          class="filter-tab {{activeFilter === 'inactive' ? 'active' : ''}}"
+          data-filter="inactive"
+          bindtap="onFilterChange"
+        >
+          不活跃
+        </view>
+      </view>
+    </view>
+
+    <!-- 顶部统计卡片 -->
+    <view class="stats-section">
+    <view class="stats-card">
+      <view class="stats-item">
+        <view class="stats-number">{{totalCustomers}}</view>
+        <view class="stats-label">总客户</view>
+      </view>
+      <view class="stats-item">
+        <view class="stats-number">{{vipCustomers}}</view>
+        <view class="stats-label">VIP客户</view>
+      </view>
+      <view class="stats-item">
+        <view class="stats-number">{{activeCustomers}}</view>
+        <view class="stats-label">活跃客户</view>
+      </view>
+      <view class="stats-item">
+        <view class="stats-number">¥{{totalSales}}</view>
+        <view class="stats-label">总销售额</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 客户列表 -->
+  <view class="customers-section">
+    <view 
+      wx:for="{{filteredCustomers}}" 
+      wx:key="id" 
+      class="customer-card {{item.swiped ? 'swiped' : ''}}"
+      data-customer="{{item}}"
+      data-index="{{index}}"
+      bindtap="onCustomerTap"
+      bindtouchstart="onTouchStart"
+      bindtouchmove="onTouchMove"
+      bindtouchend="onTouchEnd"
+    >
+      <view class="customer-content">
+        <view class="customer-header">
+          <view class="customer-avatar">{{item.avatar}}</view>
+          <view class="customer-info">
+            <view class="customer-name">{{item.name}}</view>
+            <view class="customer-phone">{{item.phone}}</view>
+          </view>
+          <view class="customer-level level-{{item.level}}">
+            {{item.levelText}}
+          </view>
+        </view>
+        
+        <view class="customer-details">
+          <view class="detail-row">
+            <text class="detail-label"><linear-icon type="money" size="small" weight="medium" color="primary"></linear-icon> 消费总额：</text>
+            <text class="detail-value amount">¥{{item.totalSpent}}</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label"><linear-icon type="package" size="small" weight="medium" color="primary"></linear-icon> 购买次数：</text>
+            <text class="detail-value">{{item.orderCount}}次</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label"><linear-icon type="calendar" size="small" weight="medium" color="primary"></linear-icon> 最近购买：</text>
+            <text class="detail-value">{{item.lastOrderDate}}</text>
+          </view>
+          <view class="detail-row" wx:if="{{item.address}}">
+            <text class="detail-label">📍 地址：</text>
+            <text class="detail-value">{{item.address}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 滑动操作按钮 -->
+      <view class="swipe-actions">
+        <view 
+          class="action-btn edit-btn"
+          data-customer="{{item}}"
+          bindtap="onEditCustomer"
+        >
+          编辑
+        </view>
+        <view 
+          class="action-btn delete-btn"
+          data-customer="{{item}}"
+          bindtap="onDeleteCustomer"
+        >
+          删除
+        </view>
+      </view>
+    </view>
+    
+    <!-- 空状态 -->
+    <view wx:if="{{filteredCustomers.length === 0}}" class="empty-state">
+      <view class="empty-icon">
+        <linear-icon type="customers" size="xlarge" weight="medium" color="muted"></linear-icon>
+      </view>
+      <text class="empty-text">暂无客户记录</text>
+      <text class="empty-hint">点击右下角按钮添加新客户</text>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="onAddCustomer">
+    <text class="add-icon">+</text>
+  </view>
+  </view>
+</view>

@@ -1,0 +1,334 @@
+/* pages/add-product/add-product.wxss */
+
+/* 容器样式 */
+.container {
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-top: 120rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.main-content {
+  padding: 20rpx;
+  margin: 0 auto;
+  max-width: 750rpx;
+  box-sizing: border-box;
+}
+
+/* 导航栏样式 */
+.nav-bar {
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
+  padding: 60rpx 30rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-back {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.nav-title {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.nav-emoji {
+  font-size: 32rpx;
+}
+
+.nav-text {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-save {
+  font-size: 28rpx;
+  padding: 10rpx 20rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+}
+
+/* 表单容器 */
+.form-container {
+  padding: 30rpx;
+}
+
+/* 表单区块 */
+.form-section {
+  margin-bottom: 30rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-bottom: 30rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.section-emoji {
+  font-size: 32rpx;
+}
+
+.section-text {
+  font-size: 28rpx;
+}
+
+/* Emoji网格 */
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 20rpx;
+}
+
+.emoji-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 60rpx;
+  font-size: 32rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.emoji-item.active {
+  background: #ff6b9d;
+  color: #ffffff;
+  border-color: #ff6b9d;
+  transform: scale(1.1);
+}
+
+.emoji-item:hover {
+  background: #ff6b9d;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* 表单项 */
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #ff6b9d;
+  box-shadow: 0 0 0 4rpx rgba(255, 107, 157, 0.1);
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 20rpx;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  background: #ffffff;
+  box-sizing: border-box;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.form-textarea:focus {
+  border-color: #ff6b9d;
+  box-shadow: 0 0 0 4rpx rgba(255, 107, 157, 0.1);
+}
+
+/* 价格输入框 */
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.price-symbol {
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  color: #666666;
+  background: #f8f9fa;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+}
+
+.price-input {
+  border: none;
+  flex: 1;
+}
+
+/* 选择器 */
+.form-picker {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+.picker-text {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 开关样式 */
+.switch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.switch-item:last-child {
+  border-bottom: none;
+}
+
+.switch-label {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40rpx;
+  box-shadow: 0 8rpx 20rpx rgba(255, 107, 157, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 4rpx 10rpx rgba(255, 107, 157, 0.3);
+}
+
+.btn-primary:disabled {
+  background: #cccccc;
+  box-shadow: none;
+}
+
+/* 错误提示 */
+.error-text {
+  color: #ff4757;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+/* 加载状态 */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .emoji-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .form-container {
+    padding: 20rpx;
+  }
+  
+  .form-section {
+    padding: 20rpx;
+  }
+}
+
+/* 商品编码输入框 */
+.sku-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.sku-input {
+  border: none;
+  flex: 1;
+}
+
+.scan-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.scan-btn:active {
+  transform: scale(0.95);
+}
+
+.scan-icon {
+  font-size: 32rpx;
+  color: #ffffff;
+}

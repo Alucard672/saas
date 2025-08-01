@@ -1,0 +1,135 @@
+<!--pages/customer-edit/customer-edit.wxml-->
+<view class="container">
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-title">
+      <image class="nav-icon" src="/images/customer-manage-colored.png"></image>
+      <text class="nav-text">{{isEdit ? '编辑客户' : '添加客户'}}</text>
+    </view>
+    <view class="nav-actions">
+      <view class="nav-btn" bindtap="onCancel">
+        <linear-icon type="x" size="medium" weight="medium" color="white"></linear-icon>
+      </view>
+    </view>
+  </view>
+
+  <view class="main-content">
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-title">
+        <image class="section-icon" src="/images/customer-manage-colored.png"></image>
+        <text class="section-text">基本信息</text>
+      </view>
+      
+      <view class="form-card">
+        <view class="form-item">
+          <text class="form-label">客户姓名</text>
+          <input 
+            class="form-input" 
+            placeholder="请输入客户姓名" 
+            value="{{customerData.name}}"
+            bindinput="onNameInput"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">联系电话</text>
+          <input 
+            class="form-input" 
+            placeholder="请输入联系电话" 
+            value="{{customerData.phone}}"
+            bindinput="onPhoneInput"
+            type="number"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">客户类型</text>
+          <picker 
+            class="form-picker" 
+            bindchange="onTypeChange" 
+            value="{{typeIndex}}" 
+            range="{{typeOptions}}"
+          >
+            <view class="picker-content">
+              <text class="picker-text">{{typeOptions[typeIndex] || '请选择客户类型'}}</text>
+              <linear-icon type="chevron-down" size="small" weight="medium" color="secondary"></linear-icon>
+            </view>
+          </picker>
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">客户地址</text>
+          <input 
+            class="form-input" 
+            placeholder="请输入客户地址" 
+            value="{{customerData.address}}"
+            bindinput="onAddressInput"
+          />
+        </view>
+      </view>
+    </view>
+
+    <!-- 商务信息 -->
+    <view class="form-section">
+      <view class="section-title">
+        <image class="section-icon" src="/images/sales-record-colored.png"></image>
+        <text class="section-text">商务信息</text>
+      </view>
+      
+      <view class="form-card">
+        <view class="form-item">
+          <text class="form-label">信用额度</text>
+          <input 
+            class="form-input" 
+            placeholder="请输入信用额度" 
+            value="{{customerData.creditLimit}}"
+            bindinput="onCreditLimitInput"
+            type="digit"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">支付方式</text>
+          <picker 
+            class="form-picker" 
+            bindchange="onPaymentMethodChange" 
+            value="{{paymentMethodIndex}}" 
+            range="{{paymentMethodOptions}}"
+          >
+            <view class="picker-content">
+              <image 
+                wx:if="{{paymentMethodIcons[paymentMethodIndex]}}"
+                class="payment-icon" 
+                src="{{paymentMethodIcons[paymentMethodIndex]}}"
+              ></image>
+              <text class="picker-text">{{paymentMethodOptions[paymentMethodIndex] || '请选择支付方式'}}</text>
+              <linear-icon type="chevron-down" size="small" weight="medium" color="secondary"></linear-icon>
+            </view>
+          </picker>
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">备注信息</text>
+          <textarea 
+            class="form-textarea" 
+            placeholder="请输入备注信息" 
+            value="{{customerData.notes}}"
+            bindinput="onNotesInput"
+            maxlength="200"
+          ></textarea>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <view class="cancel-btn" bindtap="onCancel">
+        <text class="cancel-btn-text">取消</text>
+      </view>
+      <view class="save-btn" bindtap="onSave">
+        <text class="save-btn-text">{{isEdit ? '保存' : '添加'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

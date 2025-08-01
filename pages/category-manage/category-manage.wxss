@@ -1,0 +1,403 @@
+/* pages/category-manage/category-manage.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.main-content {
+  flex: 1;
+  padding: 0 24rpx;
+  overflow: hidden;
+}
+
+/* 页面头部 */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.page-title {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24rpx;
+  color: white;
+  font-size: 28rpx;
+}
+
+.add-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.add-icon {
+  margin-right: 8rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 分类列表 */
+.category-list {
+  flex: 1;
+  padding: 24rpx;
+}
+
+.category-item {
+  margin-bottom: 24rpx;
+}
+
+.category-card {
+  background: white;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.child-card {
+  margin: 16rpx 0 0 32rpx;
+  border-left: 4rpx solid #667eea;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 32rpx;
+}
+
+.category-info {
+  flex: 1;
+  margin-right: 24rpx;
+}
+
+.category-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.category-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-right: 16rpx;
+}
+
+.expand-icon {
+  font-size: 24rpx;
+  color: #666;
+  transition: transform 0.3s ease;
+}
+
+.expand-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.category-desc {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  line-height: 1.4;
+}
+
+.category-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #999;
+  background: #f8f9fa;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+}
+
+.category-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-size: 28rpx;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-icon {
+  font-size: 28rpx;
+}
+
+/* 子分类列表 */
+.children-list {
+  padding: 0 32rpx 32rpx;
+  border-top: 1rpx solid #f0f0f0;
+  background: #fafafa;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 32rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 32rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.empty-desc {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 弹窗样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 32rpx;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 24rpx;
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50rpx) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.modal-close {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.modal-body {
+  padding: 32rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 32rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 24rpx;
+  border: 2rpx solid #e1e5e9;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  background: #fafbfc;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 6rpx rgba(102, 126, 234, 0.1);
+}
+
+.form-input.error,
+.form-textarea.error {
+  border-color: #ff6b6b;
+  background: #fff5f5;
+}
+
+.form-textarea {
+  height: 120rpx;
+  resize: none;
+}
+
+.form-picker {
+  width: 100%;
+  padding: 24rpx;
+  border: 2rpx solid #e1e5e9;
+  border-radius: 12rpx;
+  background: #fafbfc;
+}
+
+.picker-display {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.error-text {
+  display: block;
+  font-size: 24rpx;
+  color: #ff6b6b;
+  margin-top: 8rpx;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 24rpx;
+  padding: 32rpx;
+  border-top: 1rpx solid #f0f0f0;
+  background: #fafafa;
+}
+
+.btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #666;
+  border: 2rpx solid #e1e5e9;
+}
+
+.btn-secondary:active {
+  background: #e9ecef;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:active {
+  opacity: 0.8;
+}
+
+.btn-primary.loading {
+  opacity: 0.6;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .page-header {
+    padding: 24rpx;
+  }
+  
+  .page-title {
+    font-size: 32rpx;
+  }
+  
+  .add-btn {
+    padding: 12rpx 20rpx;
+    font-size: 26rpx;
+  }
+  
+  .category-header {
+    padding: 24rpx;
+  }
+  
+  .category-name {
+    font-size: 30rpx;
+  }
+  
+  .modal-content {
+    margin: 16rpx;
+  }
+}

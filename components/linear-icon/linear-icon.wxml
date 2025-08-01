@@ -1,0 +1,6 @@
+<!-- Linear Icon 组件 -->
+<view class="linear-icon {{size}} {{weight}} {{color}} {{clickable ? 'clickable' : ''}} {{disabled ? 'disabled' : ''}} {{animation}}" 
+      style="{{customStyle}}" 
+      bindtap="onTap">
+  <view class="icon-shape {{type}}-icon"></view>
+</view>

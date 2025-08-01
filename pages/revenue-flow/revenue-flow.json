@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "收入流水",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f8f9fa",
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "linear-icon": "/components/linear-icon/linear-icon"
+  }
+}

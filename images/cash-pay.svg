@@ -1,0 +1,26 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- 黄色背景 -->
+  <rect width="64" height="64" rx="12" fill="#FFD700"/>
+  
+  <!-- 钞票 -->
+  <g transform="translate(8, 16)">
+    <!-- 主钞票 -->
+    <rect x="0" y="8" width="48" height="24" rx="4" fill="#32CD32" stroke="#228B22" stroke-width="1"/>
+    
+    <!-- 钞票装饰线 -->
+    <rect x="2" y="10" width="44" height="1" fill="#228B22" opacity="0.5"/>
+    <rect x="2" y="29" width="44" height="1" fill="#228B22" opacity="0.5"/>
+    
+    <!-- 中央圆形装饰 -->
+    <circle cx="24" cy="20" r="6" fill="none" stroke="#228B22" stroke-width="2"/>
+    <text x="24" y="25" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#228B22">¥</text>
+    
+    <!-- 左右装饰 -->
+    <rect x="4" y="16" width="8" height="8" rx="2" fill="#228B22" opacity="0.3"/>
+    <rect x="36" y="16" width="8" height="8" rx="2" fill="#228B22" opacity="0.3"/>
+    
+    <!-- 后面的钞票（层叠效果） -->
+    <rect x="2" y="4" width="48" height="24" rx="4" fill="#90EE90" stroke="#228B22" stroke-width="1" opacity="0.6"/>
+    <rect x="4" y="0" width="48" height="24" rx="4" fill="#98FB98" stroke="#228B22" stroke-width="1" opacity="0.4"/>
+  </g>
+</svg>

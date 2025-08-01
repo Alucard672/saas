@@ -1,0 +1,196 @@
+<!--pages/statistics/statistics.wxml-->
+<scroll-view class="container" scroll-y="true" enable-back-to-top="true">
+  
+
+  <!-- 主要内容区域 -->
+  <view class="main-content">
+    <!-- 时间选择器 -->
+    <view class="time-selector fade-in">
+      <view class="selector-tabs">
+        <view class="time-tab {{timeRange === 'today' ? 'active' : ''}}" bindtap="setTimeRange" data-range="today">
+          <text class="tab-text">今日</text>
+        </view>
+        <view class="time-tab {{timeRange === 'week' ? 'active' : ''}}" bindtap="setTimeRange" data-range="week">
+          <text class="tab-text">本周</text>
+        </view>
+        <view class="time-tab {{timeRange === 'month' ? 'active' : ''}}" bindtap="setTimeRange" data-range="month">
+          <text class="tab-text">本月</text>
+        </view>
+        <view class="time-tab {{timeRange === 'year' ? 'active' : ''}}" bindtap="setTimeRange" data-range="year">
+          <text class="tab-text">本年</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 核心指标 -->
+    <view class="core-metrics fade-in" style="animation-delay: 0.1s;">
+      <view class="metrics-primary">
+        <view class="primary-metric">
+          <linear-icon type="money" size="large" weight="medium" color="primary"></linear-icon>
+          <view class="metric-content">
+            <view class="metric-number">¥{{totalRevenue}}</view>
+            <view class="metric-label">总收入</view>
+            <view class="metric-trend {{revenueTrend >= 0 ? 'up' : 'down'}}">
+              <linear-icon type="{{revenueTrend >= 0 ? 'trending-up' : 'trending-down'}}" size="small" weight="medium" color="{{revenueTrend >= 0 ? 'success' : 'danger'}}"></linear-icon>
+              <text class="trend-text">{{revenueTrend >= 0 ? '+' : ''}}{{revenueTrend}}%</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="metrics-secondary">
+        <view class="secondary-metric">
+          <view class="metric-number">{{totalOrders}}</view>
+          <view class="metric-label">订单数量</view>
+        </view>
+        <view class="secondary-metric">
+          <view class="metric-number">¥{{averageOrder}}</view>
+          <view class="metric-label">平均订单</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 详细统计 -->
+    <view class="detailed-stats fade-in" style="animation-delay: 0.2s;">
+      <view class="stats-grid">
+        <view class="stat-card sales">
+          <view class="card-header">
+            <linear-icon type="chart" size="medium" weight="medium" color="primary"></linear-icon>
+            <text class="card-title">销售统计</text>
+          </view>
+          <view class="card-content">
+            <view class="stat-item">
+              <text class="stat-label">销售额</text>
+              <text class="stat-value">¥{{salesAmount}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-label">利润</text>
+              <text class="stat-value profit">¥{{profit}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-label">利润率</text>
+              <text class="stat-value">{{profitRate}}%</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="stat-card inventory">
+          <view class="card-header">
+            <linear-icon type="package" size="medium" weight="medium" color="primary"></linear-icon>
+            <text class="card-title">库存统计</text>
+          </view>
+          <view class="card-content">
+            <view class="stat-item">
+              <text class="stat-label">商品总数</text>
+              <text class="stat-value">{{totalProducts}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-label">库存总值</text>
+              <text class="stat-value">¥{{inventoryValue}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-label">预警商品</text>
+              <text class="stat-value warning">{{lowStockCount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图表区域 -->
+    <view class="charts-section fade-in" style="animation-delay: 0.3s;">
+      <view class="section-header">
+        <text class="section-title">趋势分析</text>
+        <view class="chart-toggle">
+          <view class="toggle-btn {{chartType === 'revenue' ? 'active' : ''}}" bindtap="setChartType" data-type="revenue">
+            <text class="toggle-text">收入</text>
+          </view>
+          <view class="toggle-btn {{chartType === 'orders' ? 'active' : ''}}" bindtap="setChartType" data-type="orders">
+            <text class="toggle-text">订单</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="chart-container">
+        <view class="chart-placeholder">
+          <linear-icon type="trending-up" size="large" weight="medium" color="primary"></linear-icon>
+          <text class="chart-text">图表数据加载中...</text>
+          <text class="chart-subtitle">{{chartType === 'revenue' ? '收入趋势图' : '订单趋势图'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 热销商品 -->
+    <view class="hot-products fade-in" style="animation-delay: 0.4s;">
+      <view class="section-header">
+        <text class="section-title">热销商品</text>
+        <text class="section-subtitle">TOP 5</text>
+      </view>
+      
+      <view class="products-ranking" wx:if="{{hotProducts.length > 0}}">
+        <view class="ranking-item" wx:for="{{hotProducts}}" wx:key="id">
+          <view class="ranking-number {{index < 3 ? 'top' : ''}}">
+            <text class="number-text">{{index + 1}}</text>
+          </view>
+          <view class="product-avatar">
+            <text class="product-emoji">{{item.emoji}}</text>
+          </view>
+          <view class="product-details">
+            <text class="product-name">{{item.name}}</text>
+            <text class="product-sales">销量: {{item.salesCount}}</text>
+          </view>
+          <view class="product-revenue">
+            <text class="revenue-value">¥{{item.revenue}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="empty-state" wx:if="{{hotProducts.length === 0}}">
+        <view class="empty-icon">🔥</view>
+        <text class="empty-title">暂无热销商品</text>
+        <text class="empty-subtitle">开始销售商品后这里会显示热销排行</text>
+      </view>
+    </view>
+
+    <!-- 客户分析 -->
+    <view class="customer-analysis fade-in" style="animation-delay: 0.5s;">
+      <view class="section-header">
+        <text class="section-title">客户分析</text>
+      </view>
+      
+      <view class="analysis-grid">
+        <view class="analysis-card">
+          <view class="analysis-icon">👥</view>
+          <view class="analysis-content">
+            <view class="analysis-number">{{totalCustomers}}</view>
+            <view class="analysis-label">总客户数</view>
+          </view>
+        </view>
+        
+        <view class="analysis-card">
+          <view class="analysis-icon">🆕</view>
+          <view class="analysis-content">
+            <view class="analysis-number">{{newCustomers}}</view>
+            <view class="analysis-label">新增客户</view>
+          </view>
+        </view>
+        
+        <view class="analysis-card">
+          <linear-icon type="sync" size="medium" weight="medium" color="primary"></linear-icon>
+          <view class="analysis-content">
+            <view class="analysis-number">{{repeatCustomers}}</view>
+            <view class="analysis-label">回头客</view>
+          </view>
+        </view>
+        
+        <view class="analysis-card">
+          <linear-icon type="star" size="medium" weight="medium" color="primary"></linear-icon>
+          <view class="analysis-content">
+            <view class="analysis-number">¥{{avgCustomerValue}}</view>
+            <view class="analysis-label">客户均值</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

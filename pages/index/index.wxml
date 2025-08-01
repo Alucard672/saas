@@ -1,0 +1,100 @@
+<!--pages/index/index.wxml-->
+<scroll-view class="container" scroll-y="true" enable-back-to-top="true">
+  <!-- 主要内容区域 -->
+  <view class="main-content">
+    <!-- 动态问候天气组件 -->
+    <greeting-weather 
+      show-weather="{{true}}"
+      default-city="北京"
+      class="fade-in"
+    />
+
+    <!-- 核心数据展示 -->
+    <view class="core-stats fade-in" style="animation-delay: 0.1s;">
+      <view class="primary-stat" bindtap="goToRevenueFlow">
+        <view class="stat-value">¥{{monthlyRevenue}}</view>
+        <view class="stat-label">本月收入</view>
+        <linear-icon type="trend-up" size="large" weight="medium" color="primary" class="stat-icon"></linear-icon>
+      </view>
+      
+      <view class="secondary-stats">
+        <view class="mini-stat">
+          <view class="mini-value">{{totalProducts}}</view>
+          <view class="mini-label">商品总数</view>
+        </view>
+        <view class="mini-stat">
+          <view class="mini-value">{{totalSales}}</view>
+          <view class="mini-label">今日销售</view>
+        </view>
+        <view class="mini-stat">
+          <view class="mini-value">{{lowStockCount}}</view>
+          <view class="mini-label">库存预警</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 快捷操作 -->
+    <view class="quick-actions fade-in" style="animation-delay: 0.2s;">
+      <view class="section-header">
+        <text class="section-title">快捷操作</text>
+      </view>
+      
+      <!-- 核心快捷功能 -->
+      <view class="actions-grid">
+        <view class="action-card primary" bindtap="goToAddProduct">
+          <image class="action-icon" src="/images/add-product-colored.png" mode="aspectFit"></image>
+          <text class="action-title">添加商品</text>
+        </view>
+        
+        <view class="action-card secondary" bindtap="goToAddSale">
+          <image class="action-icon" src="/images/create-order-colored.png" mode="aspectFit"></image>
+          <text class="action-title">创建订单</text>
+        </view>
+        
+        <view class="action-card tertiary" bindtap="goToPurchase">
+          <image class="action-icon" src="/images/purchase-order-colored.png" mode="aspectFit"></image>
+          <text class="action-title">进货单</text>
+        </view>
+        
+        <view class="action-card quaternary" bindtap="goToRevenueFlow">
+          <linear-icon type="chart-line" size="large" weight="medium" color="primary" class="action-icon-linear"></linear-icon>
+          <text class="action-title">收入流水</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 动态信息区域 -->
+    <view class="dynamic-info fade-in" style="animation-delay: 0.3s;">
+      <!-- 最近活动 -->
+      <view class="info-card" wx:if="{{recentActivities.length > 0}}">
+        <view class="card-header">
+          <text class="card-title">最近活动</text>
+          <text class="card-more">查看全部</text>
+        </view>
+        <view class="activity-list">
+          <view class="activity-item" wx:for="{{recentActivities}}" wx:key="id" wx:for-index="index">
+            <view class="activity-dot"></view>
+            <view class="activity-content">
+              <text class="activity-text">{{item.text}}</text>
+              <text class="activity-time">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 库存预警 -->
+      <view class="info-card warning" wx:if="{{lowStockProducts.length > 0}}">
+        <view class="card-header">
+          <text class="card-title">库存预警</text>
+          <view class="warning-badge">{{lowStockProducts.length}}</view>
+        </view>
+        <view class="warning-list">
+          <view class="warning-item" wx:for="{{lowStockProducts}}" wx:key="id">
+            <text class="warning-name">{{item.name}}</text>
+            <text class="warning-stock">剩余 {{item.stock}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

@@ -1,0 +1,298 @@
+<!--pages/unit-manage/unit-manage.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 标签页切换 -->
+    <view class="tab-container">
+      <view class="tab-list">
+        <view 
+          class="tab-item {{currentTab === 0 ? 'active' : ''}}"
+          bindtap="switchTab"
+          data-index="0"
+        >
+          <text>基本单位</text>
+        </view>
+        <view 
+          class="tab-item {{currentTab === 1 ? 'active' : ''}}"
+          bindtap="switchTab"
+          data-index="1"
+        >
+          <text>换算关系</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 基本单位管理 -->
+    <view class="tab-content" wx:if="{{currentTab === 0}}">
+      <!-- 搜索栏 -->
+      <view class="search-container">
+        <view class="search-box">
+          <linear-icon type="search" size="medium" weight="regular" color="secondary" class="search-icon"></linear-icon>
+          <input 
+            class="search-input" 
+            placeholder="搜索单位名称" 
+            value="{{searchKeyword}}"
+            bindinput="onSearchInput"
+            confirm-type="search"
+            bindconfirm="onSearch"
+          />
+          <view class="clear-btn" wx:if="{{searchKeyword}}" bindtap="clearSearch">
+            <text class="clear-icon">×</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 单位列表 -->
+      <scroll-view class="content-area" scroll-y="true" enable-back-to-top="true">
+        <view class="unit-list" wx:if="{{filteredUnits.length > 0}}">
+          <view 
+            class="unit-item"
+            wx:for="{{filteredUnits}}" 
+            wx:key="id"
+          >
+            <view class="unit-content">
+              <view class="unit-left">
+                <view class="unit-info">
+                  <view class="unit-name-row">
+                    <text class="unit-name">{{item.name}}</text>
+                    <text class="unit-symbol" wx:if="{{item.symbol}}">({{item.symbol}})</text>
+                    <view class="base-unit-tag" wx:if="{{item.isBase}}">基础单位</view>
+                  </view>
+                  <text class="unit-desc" wx:if="{{item.description}}">{{item.description}}</text>
+                  <view class="unit-meta">
+                    <text class="meta-item">创建时间: {{item.createTime}}</text>
+                  </view>
+                </view>
+              </view>
+              
+              <view class="unit-actions">
+                <view class="action-btn edit-btn" bindtap="showEditUnit" data-unit="{{item}}">
+                  <linear-icon type="edit" size="small" weight="regular" color="primary" class="btn-icon"></linear-icon>
+                </view>
+                <view class="action-btn delete-btn" bindtap="deleteUnit" data-unit="{{item}}">
+                  <linear-icon type="delete" size="small" weight="regular" color="danger" class="btn-icon"></linear-icon>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 空状态 -->
+        <view class="empty-state" wx:if="{{filteredUnits.length === 0}}">
+          <linear-icon type="ruler" size="xlarge" weight="thin" color="muted" class="empty-icon"></linear-icon>
+          <text class="empty-text">{{searchKeyword ? '未找到相关单位' : '暂无单位'}}</text>
+          <text class="empty-desc">{{searchKeyword ? '尝试使用其他关键词搜索' : '点击右上角按钮添加单位'}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 换算关系管理 -->
+    <view class="tab-content" wx:if="{{currentTab === 1}}">
+      <view class="conversion-header">
+        <view class="add-conversion-btn" bindtap="showConversionModal">
+          <linear-icon type="add" size="small" weight="regular" color="primary" class="add-icon"></linear-icon>
+          <text>新增换算关系</text>
+        </view>
+      </view>
+
+      <scroll-view class="content-area" scroll-y="true" enable-back-to-top="true">
+        <view class="conversion-list" wx:if="{{conversions.length > 0}}">
+          <view 
+            class="conversion-item"
+            wx:for="{{conversions}}" 
+            wx:key="id"
+          >
+            <view class="conversion-content">
+              <view class="conversion-info">
+                <view class="conversion-formula">
+                  <text class="from-unit">1 {{item.fromUnitName}}</text>
+                  <text class="equals"> = </text>
+                  <text class="to-unit">{{item.ratio}} {{item.toUnitName}}</text>
+                </view>
+                <text class="conversion-desc" wx:if="{{item.description}}">{{item.description}}</text>
+                <view class="conversion-meta">
+                  <text class="meta-item">创建时间: {{item.createTime}}</text>
+                </view>
+              </view>
+              
+              <view class="conversion-actions">
+                <view class="action-btn edit-btn" bindtap="editConversion" data-item="{{item}}">
+                  <linear-icon type="edit" size="small" weight="regular" color="primary" class="btn-icon"></linear-icon>
+                </view>
+                <view class="action-btn delete-btn" bindtap="deleteConversion" data-id="{{item.id}}">
+                  <linear-icon type="delete" size="small" weight="regular" color="danger" class="btn-icon"></linear-icon>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 空状态 -->
+        <view class="empty-state" wx:if="{{conversions.length === 0}}">
+          <linear-icon type="refresh" size="xlarge" weight="thin" color="muted" class="empty-icon"></linear-icon>
+          <text class="empty-text">暂无换算关系</text>
+          <text class="empty-desc">点击上方按钮添加换算关系</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 添加/编辑单位弹窗 -->
+    <view class="modal-overlay" wx:if="{{showModal}}" bindtap="hideModal">
+      <view class="modal-content" catchtap="stopPropagation">
+        <view class="modal-header">
+          <text class="modal-title">{{isEdit ? '编辑单位' : '新增单位'}}</text>
+          <view class="modal-close" bindtap="hideModal">
+            <text>×</text>
+          </view>
+        </view>
+        
+        <view class="modal-body">
+          <view class="form-group">
+            <text class="form-label">单位名称 *</text>
+            <input 
+              class="form-input {{errors.name ? 'error' : ''}}"
+              placeholder="请输入单位名称"
+              value="{{formData.name}}"
+              bindinput="onFormInput"
+              data-field="name"
+              maxlength="10"
+            />
+            <text class="input-hint">最多10个字符</text>
+            <text class="error-text" wx:if="{{errors.name}}">{{errors.name}}</text>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">单位符号</text>
+            <input 
+              class="form-input {{errors.symbol ? 'error' : ''}}"
+              placeholder="请输入单位符号（如：kg、m、个）"
+              value="{{formData.symbol}}"
+              bindinput="onFormInput"
+              data-field="symbol"
+              maxlength="5"
+            />
+            <text class="input-hint">最多5个字符</text>
+            <text class="error-text" wx:if="{{errors.symbol}}">{{errors.symbol}}</text>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">单位描述</text>
+            <textarea 
+              class="form-textarea {{errors.description ? 'error' : ''}}"
+              placeholder="请输入单位描述（可选）"
+              value="{{formData.description}}"
+              bindinput="onFormInput"
+              data-field="description"
+              maxlength="50"
+            ></textarea>
+            <text class="input-hint">最多50个字符</text>
+            <text class="error-text" wx:if="{{errors.description}}">{{errors.description}}</text>
+          </view>
+
+          <view class="form-group">
+            <view class="checkbox-group">
+              <label class="checkbox-item">
+                <checkbox 
+                  value="isBase" 
+                  checked="{{formData.isBase}}"
+                  bindchange="onCheckboxChange"
+                />
+                <text class="checkbox-label">设为基础单位</text>
+              </label>
+            </view>
+            <text class="input-hint">基础单位用于换算关系的基准</text>
+          </view>
+        </view>
+        
+        <view class="modal-footer">
+          <view class="btn btn-secondary" bindtap="hideModal">取消</view>
+          <view class="btn btn-primary {{submitting ? 'loading' : ''}}" bindtap="submitForm">
+            {{submitting ? '保存中...' : '保存'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 添加/编辑换算关系弹窗 -->
+    <view class="modal-overlay" wx:if="{{showConversionModal}}" bindtap="hideConversionModal">
+      <view class="modal-content" catchtap="stopPropagation">
+        <view class="modal-header">
+          <text class="modal-title">{{isEditConversion ? '编辑换算关系' : '新增换算关系'}}</text>
+          <view class="modal-close" bindtap="hideConversionModal">
+            <text>×</text>
+          </view>
+        </view>
+        
+        <view class="modal-body">
+          <view class="form-group">
+            <text class="form-label">源单位 *</text>
+            <picker
+              class="form-picker {{conversionErrors.fromUnit ? 'error' : ''}}"
+              mode="selector"
+              range="{{units}}"
+              range-key="name"
+              value="{{fromUnitIndex}}"
+              bindchange="onFromUnitChange"
+            >
+              <view class="picker-display">
+                {{units[fromUnitIndex] ? units[fromUnitIndex].name : '请选择源单位'}}
+              </view>
+            </picker>
+            <text class="error-text" wx:if="{{conversionErrors.fromUnit}}">{{conversionErrors.fromUnit}}</text>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">目标单位 *</text>
+            <picker
+              class="form-picker {{conversionErrors.toUnit ? 'error' : ''}}"
+              mode="selector"
+              range="{{units}}"
+              range-key="name"
+              value="{{toUnitIndex}}"
+              bindchange="onToUnitChange"
+            >
+              <view class="picker-display">
+                {{units[toUnitIndex] ? units[toUnitIndex].name : '请选择目标单位'}}
+              </view>
+            </picker>
+            <text class="error-text" wx:if="{{conversionErrors.toUnit}}">{{conversionErrors.toUnit}}</text>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">换算比例 *</text>
+            <input 
+              class="form-input {{conversionErrors.ratio ? 'error' : ''}}"
+              placeholder="请输入换算比例"
+              value="{{conversionData.ratio}}"
+              bindinput="onConversionInput"
+              data-field="ratio"
+              type="digit"
+            />
+            <text class="input-hint">1个源单位等于多少个目标单位</text>
+            <text class="error-text" wx:if="{{conversionErrors.ratio}}">{{conversionErrors.ratio}}</text>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">换算描述</text>
+            <textarea 
+              class="form-textarea {{conversionErrors.description ? 'error' : ''}}"
+              placeholder="请输入换算描述（可选）"
+              value="{{conversionData.description}}"
+              bindinput="onConversionInput"
+              data-field="description"
+              maxlength="50"
+            ></textarea>
+            <text class="input-hint">最多50个字符</text>
+            <text class="error-text" wx:if="{{conversionErrors.description}}">{{conversionErrors.description}}</text>
+          </view>
+        </view>
+        
+        <view class="modal-footer">
+          <view class="btn btn-secondary" bindtap="hideConversionModal">取消</view>
+          <view class="btn btn-primary {{submittingConversion ? 'loading' : ''}}" bindtap="submitConversionForm">
+            {{submittingConversion ? '保存中...' : '保存'}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

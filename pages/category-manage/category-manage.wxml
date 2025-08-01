@@ -1,0 +1,159 @@
+<!--pages/category-manage/category-manage.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 搜索栏 -->
+    <view class="search-container">
+    <view class="search-box">
+      <linear-icon type="search" size="medium" weight="regular" color="secondary" class="search-icon"></linear-icon>
+      <input 
+        class="search-input" 
+        placeholder="搜索分类名称" 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+        bindconfirm="onSearch"
+      />
+      <view class="clear-btn" wx:if="{{searchKeyword}}" bindtap="clearSearch">
+        <text class="clear-icon">×</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分类列表 -->
+  <scroll-view class="content-area" scroll-y="true" enable-back-to-top="true">
+    <view class="category-tree" wx:if="{{filteredCategories.length > 0}}">
+      <view 
+        class="category-item {{item.level === 0 ? 'parent-category' : 'child-category'}}"
+        wx:for="{{filteredCategories}}" 
+        wx:key="id"
+        style="padding-left: {{item.level * 40 + 24}}rpx;"
+      >
+        <view class="category-content" bindtap="toggleCategory" data-id="{{item.id}}">
+          <view class="category-left">
+            <view class="expand-icon" wx:if="{{item.children && item.children.length > 0}}">
+              <text class="icon">{{item.expanded ? '▼' : '▶'}}</text>
+            </view>
+            <view class="category-info">
+              <text class="category-name">{{item.name}}</text>
+              <text class="category-desc" wx:if="{{item.description}}">{{item.description}}</text>
+              <view class="category-meta">
+                <text class="meta-item">排序: {{item.sort}}</text>
+                <text class="meta-item" wx:if="{{item.children}}">子分类: {{item.children.length}}</text>
+                <text class="meta-item">创建时间: {{item.createTime}}</text>
+              </view>
+            </view>
+          </view>
+          
+          <view class="category-actions">
+            <view class="action-btn edit-btn" bindtap="editCategory" data-item="{{item}}">
+              <linear-icon type="edit" size="small" weight="regular" color="primary" class="btn-icon"></linear-icon>
+            </view>
+            <view class="action-btn delete-btn" bindtap="deleteCategory" data-id="{{item.id}}" data-name="{{item.name}}">
+              <linear-icon type="delete" size="small" weight="regular" color="danger" class="btn-icon"></linear-icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{filteredCategories.length === 0}}">
+      <linear-icon type="folder" size="xlarge" weight="thin" color="muted" class="empty-icon"></linear-icon>
+      <text class="empty-text">{{searchKeyword ? '未找到相关分类' : '暂无分类'}}</text>
+      <text class="empty-desc">{{searchKeyword ? '尝试使用其他关键词搜索' : '点击右上角按钮添加分类'}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 添加/编辑分类弹窗 -->
+  <view class="modal-overlay" wx:if="{{showModal}}" bindtap="hideModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">{{isEdit ? '编辑分类' : '新增分类'}}</text>
+        <view class="modal-close" bindtap="hideModal">
+          <text>×</text>
+        </view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="form-group">
+          <text class="form-label">分类名称 *</text>
+          <input 
+            class="form-input {{errors.name ? 'error' : ''}}"
+            placeholder="请输入分类名称"
+            value="{{formData.name}}"
+            bindinput="onFormInput"
+            data-field="name"
+            maxlength="20"
+          />
+          <text class="input-hint">最多20个字符</text>
+          <text class="error-text" wx:if="{{errors.name}}">{{errors.name}}</text>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">上级分类</text>
+          <picker
+            class="form-picker {{errors.parentId ? 'error' : ''}}"
+            mode="selector"
+            range="{{parentCategories}}"
+            range-key="name"
+            value="{{parentCategoryIndex}}"
+            bindchange="onParentChange"
+          >
+            <view class="picker-display">
+              {{parentCategories[parentCategoryIndex] ? parentCategories[parentCategoryIndex].name : '请选择上级分类'}}
+            </view>
+          </picker>
+          <text class="input-hint">不选择则为顶级分类</text>
+          <text class="error-text" wx:if="{{errors.parentId}}">{{errors.parentId}}</text>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">排序</text>
+          <input 
+            class="form-input {{errors.sort ? 'error' : ''}}"
+            placeholder="请输入排序号"
+            value="{{formData.sort}}"
+            bindinput="onFormInput"
+            data-field="sort"
+            type="number"
+          />
+          <text class="input-hint">数字越小排序越靠前</text>
+          <text class="error-text" wx:if="{{errors.sort}}">{{errors.sort}}</text>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">分类描述</text>
+          <textarea 
+            class="form-textarea {{errors.description ? 'error' : ''}}"
+            placeholder="请输入分类描述（可选）"
+            value="{{formData.description}}"
+            bindinput="onFormInput"
+            data-field="description"
+            maxlength="100"
+          ></textarea>
+          <text class="input-hint">最多100个字符</text>
+          <text class="error-text" wx:if="{{errors.description}}">{{errors.description}}</text>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <view class="btn btn-secondary" bindtap="hideModal">取消</view>
+        <view class="btn btn-primary {{submitting ? 'loading' : ''}}" bindtap="submitForm">
+          {{submitting ? '保存中...' : '保存'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 批量操作栏 -->
+  <view class="batch-actions" wx:if="{{selectedIds.length > 0}}">
+    <view class="batch-info">
+      <text>已选择 {{selectedIds.length}} 项</text>
+    </view>
+    <view class="batch-buttons">
+      <view class="batch-btn cancel-btn" bindtap="cancelBatchSelect">取消</view>
+      <view class="batch-btn delete-btn" bindtap="batchDelete">删除</view>
+    </view>
+  </view>
+  </view>
+</view>

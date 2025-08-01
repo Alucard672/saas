@@ -1,0 +1,53 @@
+<!-- 动态问候天气组件 -->
+<view class="greeting-weather-container">
+  <!-- 主要内容区域：问候语和天气信息 -->
+  <view class="main-content">
+    <!-- 问候语部分 -->
+    <view class="greeting-section">
+      <view class="greeting-text">
+        <text class="greeting-title">{{greetingText}}</text>
+        <text class="greeting-subtitle">{{motivationText}}</text>
+      </view>
+      <view class="greeting-icon">{{greetingIcon}}</view>
+    </view>
+
+    <!-- 天气信息部分 -->
+    <view class="weather-section" wx:if="{{showWeather && !weatherLoading && !weatherError}}">
+      <view class="weather-main">
+        <view class="weather-icon">{{weatherData.icon}}</view>
+        <view class="weather-info">
+          <text class="temperature">{{weatherData.temperature}}°</text>
+          <text class="weather-desc">{{weatherData.description}}</text>
+        </view>
+      </view>
+      
+      <!-- 整合的天气详情 - 使用图标显示 -->
+      <view class="weather-details-inline">
+        <view class="weather-detail-item">
+          <text class="weather-detail-icon">💧</text>
+          <text class="weather-detail-value">{{weatherData.humidity}}%</text>
+        </view>
+        <view class="weather-detail-item">
+          <text class="weather-detail-icon">💨</text>
+          <text class="weather-detail-value">{{weatherData.windSpeed}}km/h</text>
+        </view>
+        <view class="weather-detail-item">
+          <text class="weather-detail-icon">📍</text>
+          <text class="weather-detail-value">{{weatherData.location}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view class="weather-loading" wx:if="{{showWeather && weatherLoading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">获取天气信息中...</text>
+  </view>
+  
+  <!-- 错误状态 -->
+  <view class="weather-error" wx:if="{{showWeather && weatherError}}">
+    <text class="error-text">{{weatherError}}</text>
+    <button class="retry-btn" bindtap="retryWeather" size="mini">重试</button>
+  </view>
+</view>

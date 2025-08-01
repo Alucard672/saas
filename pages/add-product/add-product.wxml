@@ -1,0 +1,167 @@
+<!--pages/add-product/add-product.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 顶部导航栏 -->
+    <view class="nav-bar">
+    <view class="nav-left" bindtap="goBack">
+      <text class="nav-back">←</text>
+    </view>
+    <view class="nav-title">
+      <linear-icon type="{{isEdit ? 'edit' : 'plus'}}" size="medium" weight="medium" color="primary"></linear-icon>
+      <text class="nav-text">{{isEdit ? '编辑商品' : '添加商品'}}</text>
+    </view>
+    <view class="nav-right">
+      <text class="nav-save" bindtap="saveProduct">保存</text>
+    </view>
+  </view>
+
+  <!-- 表单内容 -->
+  <view class="form-container">
+    <!-- 商品图标选择 -->
+    <view class="form-section card">
+      <view class="section-title">
+        <linear-icon type="palette" size="medium" weight="medium" color="primary"></linear-icon>
+        <text class="section-text">商品图标</text>
+      </view>
+      <view class="emoji-grid">
+        <view class="emoji-item {{selectedEmoji === item ? 'active' : ''}}" 
+              wx:for="{{emojiList}}" 
+              wx:key="*this"
+              bindtap="selectEmoji"
+              data-emoji="{{item}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="form-section card">
+      <view class="section-title">
+        <linear-icon type="document" size="medium" weight="medium" color="primary"></linear-icon>
+        <text class="section-text">基本信息</text>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">商品名称 *</text>
+        <input class="form-input" 
+               placeholder="请输入商品名称"
+               value="{{formData.name}}"
+               bindinput="onInputChange"
+               data-field="name"/>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">商品编码</text>
+        <view class="sku-input-wrapper">
+          <input class="form-input sku-input" 
+                 placeholder="请输入商品编码"
+                 value="{{formData.sku}}"
+                 bindinput="onInputChange"
+                 data-field="sku"/>
+          <view class="scan-btn" bindtap="scanCode">
+            <text class="scan-icon">📷</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">商品分类</text>
+        <picker class="form-picker" 
+                range="{{categoryList}}" 
+                value="{{categoryIndex}}"
+                bindchange="onCategoryChange">
+          <view class="picker-text">
+            {{categoryList[categoryIndex]}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">商品描述</text>
+        <textarea class="form-textarea" 
+                  placeholder="请输入商品描述"
+                  value="{{formData.description}}"
+                  bindinput="onInputChange"
+                  data-field="description"/>
+      </view>
+    </view>
+
+    <!-- 价格库存 -->
+    <view class="form-section card">
+      <view class="section-title">
+        <linear-icon type="money" size="medium" weight="medium" color="primary"></linear-icon>
+        <text class="section-text">价格库存</text>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">包装单位</text>
+        <picker class="form-picker" 
+                range="{{unitList}}" 
+                value="{{unitIndex}}"
+                bindchange="onUnitChange">
+          <view class="picker-text">
+            {{unitList[unitIndex]}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">销售价格 *</text>
+        <view class="price-input-wrapper">
+          <text class="price-symbol">¥</text>
+          <input class="form-input price-input" 
+                 type="digit"
+                 placeholder="0.00"
+                 value="{{formData.price}}"
+                 bindinput="onInputChange"
+                 data-field="price"/>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">当前库存 *</text>
+        <input class="form-input" 
+               type="number"
+               placeholder="请输入库存数量"
+               value="{{formData.stock}}"
+               bindinput="onInputChange"
+               data-field="stock"/>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">最低库存</text>
+        <input class="form-input" 
+               type="number"
+               placeholder="请输入最低库存"
+               value="{{formData.minStock}}"
+               bindinput="onInputChange"
+               data-field="minStock"/>
+      </view>
+    </view>
+
+    <!-- 其他设置 -->
+    <view class="form-section card">
+      <view class="section-title">
+        <linear-icon type="settings" size="medium" weight="medium" color="primary"></linear-icon>
+        <text class="section-text">其他设置</text>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">热销商品</text>
+        <switch class="form-switch" 
+                checked="{{formData.isHot}}"
+                bindchange="onSwitchChange"
+                data-field="isHot"/>
+      </view>
+    </view>
+
+    <!-- 删除按钮 -->
+    <view class="delete-section" wx:if="{{isEdit}}">
+      <button class="delete-btn" bindtap="deleteProduct">
+        <linear-icon type="delete" size="medium" weight="medium" color="danger"></linear-icon>
+        <text class="delete-text">删除商品</text>
+      </button>
+    </view>
+  </view>
+  </view>
+</view>

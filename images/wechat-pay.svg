@@ -1,0 +1,23 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- 微信绿色背景 -->
+  <rect width="64" height="64" rx="12" fill="#07C160"/>
+  
+  <!-- 微信LOGO -->
+  <g transform="translate(8, 12)">
+    <!-- 主要气泡 -->
+    <ellipse cx="18" cy="16" rx="16" ry="12" fill="#ffffff"/>
+    <!-- 小气泡 -->
+    <ellipse cx="36" cy="24" rx="10" ry="8" fill="#ffffff"/>
+    
+    <!-- 眼睛 -->
+    <circle cx="12" cy="14" r="2" fill="#07C160"/>
+    <circle cx="24" cy="14" r="2" fill="#07C160"/>
+    
+    <!-- 嘴巴 -->
+    <path d="M 14 20 Q 18 24 22 20" stroke="#07C160" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    
+    <!-- 小气泡上的点 -->
+    <circle cx="32" cy="22" r="1" fill="#07C160"/>
+    <circle cx="40" cy="22" r="1" fill="#07C160"/>
+  </g>
+</svg>

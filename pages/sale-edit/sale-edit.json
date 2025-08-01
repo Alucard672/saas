@@ -1,0 +1,9 @@
+{
+  "backgroundColor": "#f8f9fa",
+  "enablePullDownRefresh": false,
+  "disableScroll": false,
+  "usingComponents": {
+    "linear-icon": "/components/linear-icon/linear-icon"
+  },
+  "navigationBarTitleText": "编辑订单"
+}

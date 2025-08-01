@@ -1,0 +1,214 @@
+/* pages/profile/profile.wxss */
+.container {
+  height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+}
+
+/* 红色边框主要内容区域 */
+.main-border-area {
+  border: 4rpx solid #ff4757;
+  border-radius: 16rpx;
+  background: #ffffff;
+  padding: 30rpx;
+  margin: 0 auto;
+  max-width: 680rpx;
+  box-shadow: 0 8rpx 24rpx rgba(255, 71, 87, 0.15);
+}
+
+/* 用户信息卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 2rpx solid #f0f0f0;
+  margin-bottom: 30rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #ff4757;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.avatar-image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.avatar-emoji {
+  font-size: 40rpx;
+  color: white;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.user-role {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.edit-btn {
+  padding: 12rpx 24rpx;
+  background: #ff4757;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+/* 核心数据统计 */
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 30rpx 0;
+  border-bottom: 2rpx solid #f0f0f0;
+  margin-bottom: 30rpx;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff4757;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 核心功能菜单 */
+.menu-section {
+  margin-bottom: 30rpx;
+}
+
+.menu-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 4rpx solid #ff4757;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.menu-item:active {
+  background: #f0f0f0;
+  border-color: #ff4757;
+  transform: scale(0.95);
+}
+
+.menu-icon {
+  font-size: 32rpx;
+  margin-bottom: 8rpx;
+}
+
+.menu-icon-img {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 8rpx;
+  border-radius: 6rpx;
+}
+
+.menu-text {
+  font-size: 22rpx;
+  color: #333;
+  text-align: center;
+}
+
+/* 系统工具 */
+.tools-section {
+  border-top: 2rpx solid #f0f0f0;
+  padding-top: 30rpx;
+}
+
+.tools-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 4rpx solid #ff4757;
+}
+
+.tools-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15rpx;
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tool-item:active {
+  background: #f0f0f0;
+  border-color: #ff4757;
+  transform: scale(0.95);
+}
+
+.tool-icon {
+  font-size: 28rpx;
+  margin-right: 15rpx;
+}
+
+.tool-text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+/* 响应式设计 */
+@media (max-width: 600rpx) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .tools-list {
+    grid-template-columns: 1fr;
+  }
+}

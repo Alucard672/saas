@@ -1,0 +1,179 @@
+<!--pages/purchase-order-edit/purchase-order-edit.wxml-->
+<view class="container">
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-title">
+      <image class="nav-icon" src="/images/purchase-order-colored.png"></image>
+      <text class="nav-text">{{isEdit ? '编辑采购单' : '创建采购单'}}</text>
+    </view>
+    <view class="nav-actions">
+      <view class="nav-btn" bindtap="onCancel">
+        <linear-icon type="x" size="medium" weight="medium" color="white"></linear-icon>
+      </view>
+    </view>
+  </view>
+
+  <view class="main-content">
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-title">
+        <image class="section-icon" src="/images/purchase-order-colored.png"></image>
+        <text class="section-text">基本信息</text>
+      </view>
+      
+      <view class="form-card">
+        <view class="form-item">
+          <text class="form-label">采购单号</text>
+          <input 
+            class="form-input" 
+            placeholder="系统自动生成" 
+            value="{{orderData.orderNumber}}"
+            disabled
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">供应商</text>
+          <picker 
+            class="form-picker" 
+            bindchange="onSupplierChange" 
+            value="{{supplierIndex}}" 
+            range="{{supplierOptions}}"
+            range-key="name"
+          >
+            <view class="picker-content">
+              <text class="picker-text">{{supplierOptions[supplierIndex].name || '请选择供应商'}}</text>
+              <linear-icon type="chevron-down" size="small" weight="medium" color="secondary"></linear-icon>
+            </view>
+          </picker>
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">预计交货日期</text>
+          <picker 
+            class="form-picker" 
+            mode="date" 
+            value="{{orderData.deliveryDate}}" 
+            bindchange="onDeliveryDateChange"
+          >
+            <view class="picker-content">
+              <text class="picker-text">{{orderData.deliveryDate || '请选择交货日期'}}</text>
+              <linear-icon type="calendar" size="small" weight="medium" color="secondary"></linear-icon>
+            </view>
+          </picker>
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">采购状态</text>
+          <picker 
+            class="form-picker" 
+            bindchange="onStatusChange" 
+            value="{{statusIndex}}" 
+            range="{{statusOptions}}"
+          >
+            <view class="picker-content">
+              <view class="status-indicator status-{{statusOptions[statusIndex].value}}"></view>
+              <text class="picker-text">{{statusOptions[statusIndex].label || '请选择状态'}}</text>
+              <linear-icon type="chevron-down" size="small" weight="medium" color="secondary"></linear-icon>
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品列表 -->
+    <view class="form-section">
+      <view class="section-title">
+        <image class="section-icon" src="/images/product-manage-colored.png"></image>
+        <text class="section-text">采购商品</text>
+        <view class="add-btn" bindtap="onAddProduct">
+          <linear-icon type="plus" size="small" weight="medium" color="white"></linear-icon>
+          <text class="add-btn-text">添加商品</text>
+        </view>
+      </view>
+      
+      <view class="products-list" wx:if="{{orderData.products.length > 0}}">
+        <view class="product-item" wx:for="{{orderData.products}}" wx:key="id">
+          <view class="product-info">
+            <image class="product-icon" src="/images/product-manage-colored.png"></image>
+            <view class="product-details">
+              <text class="product-name">{{item.name}}</text>
+              <text class="product-sku">编码: {{item.sku}}</text>
+            </view>
+          </view>
+          
+          <view class="product-actions">
+            <view class="quantity-control">
+              <view class="quantity-btn" bindtap="onDecreaseQuantity" data-index="{{index}}">
+                <linear-icon type="minus" size="small" weight="medium" color="secondary"></linear-icon>
+              </view>
+              <text class="quantity-text">{{item.quantity}}</text>
+              <view class="quantity-btn" bindtap="onIncreaseQuantity" data-index="{{index}}">
+                <linear-icon type="plus" size="small" weight="medium" color="secondary"></linear-icon>
+              </view>
+            </view>
+            
+            <text class="product-price">¥{{item.price}}</text>
+            <text class="product-unit">{{item.unit}}</text>
+            
+            <view class="remove-btn" bindtap="onRemoveProduct" data-index="{{index}}">
+              <linear-icon type="trash-2" size="small" weight="medium" color="danger"></linear-icon>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="empty-products" wx:else>
+        <image class="empty-icon" src="/images/product-manage-colored.png"></image>
+        <text class="empty-text">暂无采购商品</text>
+        <text class="empty-hint">点击上方"添加商品"按钮添加</text>
+      </view>
+    </view>
+
+    <!-- 汇总信息 -->
+    <view class="summary-section" wx:if="{{orderData.products.length > 0}}">
+      <view class="summary-card">
+        <view class="summary-item">
+          <text class="summary-label">商品数量</text>
+          <text class="summary-value">{{totalQuantity}}件</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label">商品种类</text>
+          <text class="summary-value">{{orderData.products.length}}种</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label">采购总额</text>
+          <text class="summary-value total">¥{{totalAmount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 备注信息 -->
+    <view class="form-section">
+      <view class="section-title">
+        <linear-icon type="file-text" size="medium" weight="medium" color="secondary"></linear-icon>
+        <text class="section-text">备注信息</text>
+      </view>
+      
+      <view class="form-card">
+        <textarea 
+          class="form-textarea" 
+          placeholder="请输入采购备注信息..." 
+          value="{{orderData.notes}}"
+          bindinput="onNotesInput"
+          maxlength="200"
+        ></textarea>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <view class="cancel-btn" bindtap="onCancel">
+        <text class="cancel-btn-text">取消</text>
+      </view>
+      <view class="save-btn" bindtap="onSave">
+        <text class="save-btn-text">{{isEdit ? '保存' : '创建'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

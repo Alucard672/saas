@@ -1,0 +1,105 @@
+<!--pages/add-sale/add-sale.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 导航栏 -->
+    <view class="nav-bar">
+    <view class="nav-title">
+      <linear-icon type="cart" size="medium" weight="medium" color="primary"></linear-icon>
+      <text class="nav-text">{{isEdit ? '编辑订单' : '创建订单'}}</text>
+    </view>
+    <view class="nav-actions">
+      <view class="nav-btn" bindtap="goBack">
+        <text class="nav-btn-emoji">←</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单信息 -->
+  <view class="form-section">
+    <view class="section-title">
+      <linear-icon type="list" size="medium" weight="medium" color="primary"></linear-icon>
+      <text class="section-text">订单信息</text>
+    </view>
+    
+    <view class="form-card">
+      <view class="form-item">
+        <text class="form-label">订单号</text>
+        <text class="form-value">{{orderNo}}</text>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">客户姓名</text>
+        <input class="form-input" placeholder="请输入客户姓名" value="{{customer}}" bindinput="onCustomerInput" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">支付方式</text>
+        <picker class="form-picker" range="{{paymentMethods}}" value="{{paymentMethodIndex}}" bindchange="onPaymentMethodChange">
+          <view class="picker-content">
+            <image 
+              class="payment-icon" 
+              src="{{paymentMethods[paymentMethodIndex] === '微信支付' ? '/images/wechat-pay.png' : paymentMethods[paymentMethodIndex] === '支付宝' ? '/images/alipay.png' : paymentMethods[paymentMethodIndex] === '现金' ? '/images/cash-pay.png' : '/images/card-pay.png'}}" 
+              mode="aspectFit"
+            ></image>
+            <view class="picker-text">{{paymentMethods[paymentMethodIndex]}}</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品选择 -->
+  <view class="form-section">
+    <view class="section-title">
+      <linear-icon type="package" size="medium" weight="medium" color="primary"></linear-icon>
+      <text class="section-text">商品选择</text>
+      <view class="add-btn" bindtap="addProduct">
+        <text class="add-btn-emoji">+</text>
+        <text class="add-btn-text">添加商品</text>
+      </view>
+    </view>
+    
+    <view class="products-list">
+      <view class="product-item" wx:for="{{selectedProducts}}" wx:key="productId">
+        <view class="product-info">
+          <view class="product-emoji">{{item.emoji}}</view>
+          <view class="product-details">
+            <text class="product-name">{{item.name}}</text>
+            <text class="product-unit">{{item.unit}}</text>
+          </view>
+        </view>
+        <view class="quantity-control">
+          <view class="quantity-btn" bindtap="decreaseQuantity" data-index="{{index}}">-</view>
+          <text class="quantity-text">{{item.quantity}}</text>
+          <view class="quantity-btn" bindtap="increaseQuantity" data-index="{{index}}">+</view>
+        </view>
+        <view class="product-price">¥{{item.price}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单汇总 -->
+  <view class="summary-section">
+    <view class="summary-card">
+      <view class="summary-item">
+        <text class="summary-label">商品数量</text>
+        <text class="summary-value">{{totalQuantity}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">订单总额</text>
+        <text class="summary-value total">¥{{totalAmount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <view class="cancel-btn" bindtap="goBack">
+      <text class="cancel-btn-text">取消</text>
+    </view>
+    <view class="save-btn" bindtap="saveOrder">
+      <text class="save-btn-text">{{isEdit ? '更新订单' : '创建订单'}}</text>
+    </view>
+  </view>
+  </view>
+</view>

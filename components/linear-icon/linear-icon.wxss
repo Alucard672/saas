@@ -1,0 +1,683 @@
+/* 线性图标组件 - 优化版样式 */
+.linear-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 尺寸定义 - 增加更多尺寸选项 */
+.linear-icon.small {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.linear-icon.medium {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.linear-icon.large {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.linear-icon.xlarge {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+/* 图标形状基础样式 - 增强视觉效果 */
+.icon-shape {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1rpx 2rpx rgba(0, 0, 0, 0.1));
+}
+
+.icon-shape::before,
+.icon-shape::after {
+  content: '';
+  position: absolute;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+/* 线条粗细 - 优化视觉层次 */
+.linear-icon.thin .icon-shape::before,
+.linear-icon.thin .icon-shape::after {
+  border-width: 1rpx;
+}
+
+.linear-icon.regular .icon-shape::before,
+.linear-icon.regular .icon-shape::after {
+  border-width: 2rpx;
+}
+
+.linear-icon.medium .icon-shape::before,
+.linear-icon.medium .icon-shape::after {
+  border-width: 3rpx;
+}
+
+.linear-icon.bold .icon-shape::before,
+.linear-icon.bold .icon-shape::after {
+  border-width: 4rpx;
+}
+
+/* 颜色主题 - 增强色彩系统 */
+.linear-icon.primary {
+  color: #007aff;
+}
+
+.linear-icon.secondary {
+  color: #6c757d;
+}
+
+.linear-icon.success {
+  color: #34c759;
+}
+
+.linear-icon.warning {
+  color: #ff9500;
+}
+
+.linear-icon.danger {
+  color: #ff3b30;
+}
+
+.linear-icon.muted {
+  color: #8e8e93;
+}
+
+.linear-icon.white {
+  color: #ffffff;
+}
+
+.linear-icon.dark {
+  color: #1c1c1e;
+}
+
+.linear-icon .icon-shape::before,
+.linear-icon .icon-shape::after {
+  border-color: currentColor;
+}
+
+/* 搜索图标 - 增强视觉效果 */
+.search-icon::before {
+  width: 65%;
+  height: 65%;
+  border: 2rpx solid;
+  border-radius: 50%;
+  top: 12%;
+  left: 12%;
+  background: linear-gradient(135deg, transparent 40%, currentColor 40%, currentColor 60%, transparent 60%);
+  background-size: 8rpx 8rpx;
+  opacity: 0.1;
+}
+
+.search-icon::after {
+  width: 28%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(45deg);
+  bottom: 18%;
+  right: 18%;
+  border-radius: 2rpx;
+  box-shadow: 0 0 4rpx currentColor;
+}
+
+/* 编辑图标 - 铅笔效果 */
+.edit-icon::before {
+  width: 55%;
+  height: 3rpx;
+  background: linear-gradient(45deg, currentColor 0%, currentColor 80%, transparent 80%);
+  transform: rotate(45deg);
+  top: 32%;
+  left: 22%;
+  border-radius: 2rpx;
+  box-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.2);
+}
+
+.edit-icon::after {
+  width: 18%;
+  height: 18%;
+  border-left: 3rpx solid;
+  border-bottom: 3rpx solid;
+  bottom: 22%;
+  left: 22%;
+  border-radius: 0 0 0 2rpx;
+}
+
+/* 删除图标 - X形状优化 */
+.delete-icon::before {
+  width: 55%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(45deg);
+  top: 50%;
+  left: 22.5%;
+  border-radius: 2rpx;
+  box-shadow: 0 0 6rpx rgba(255, 59, 48, 0.3);
+}
+
+.delete-icon::after {
+  width: 55%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 50%;
+  left: 22.5%;
+  border-radius: 2rpx;
+}
+
+/* 加号图标 - 现代化设计 */
+.plus-icon::before {
+  width: 55%;
+  height: 3rpx;
+  background: currentColor;
+  top: 50%;
+  left: 22.5%;
+  border-radius: 2rpx;
+  box-shadow: 0 0 8rpx rgba(0, 122, 255, 0.2);
+}
+
+.plus-icon::after {
+  width: 3rpx;
+  height: 55%;
+  background: currentColor;
+  top: 22.5%;
+  left: 50%;
+  border-radius: 2rpx;
+}
+
+/* 文件夹图标 - 3D效果 */
+.folder-icon::before {
+  width: 75%;
+  height: 55%;
+  border: 2rpx solid;
+  border-top: none;
+  bottom: 15%;
+  left: 12.5%;
+  border-radius: 0 0 4rpx 4rpx;
+  background: linear-gradient(180deg, transparent 0%, currentColor 2%, transparent 4%);
+}
+
+.folder-icon::after {
+  width: 35%;
+  height: 3rpx;
+  background: currentColor;
+  top: 25%;
+  left: 12.5%;
+  border-radius: 2rpx 2rpx 0 0;
+}
+
+/* 包裹图标 - 立体效果 */
+.package-icon::before {
+  width: 65%;
+  height: 65%;
+  border: 2rpx solid;
+  top: 17.5%;
+  left: 17.5%;
+  border-radius: 2rpx;
+  background: linear-gradient(135deg, transparent 48%, currentColor 48%, currentColor 52%, transparent 52%);
+  background-size: 12rpx 12rpx;
+  opacity: 0.1;
+}
+
+.package-icon::after {
+  width: 65%;
+  height: 3rpx;
+  background: currentColor;
+  top: 50%;
+  left: 17.5%;
+  border-radius: 2rpx;
+  box-shadow: 0 -15rpx 0 currentColor, 0 15rpx 0 currentColor;
+}
+
+/* 购物车图标 - 现代化设计 */
+.cart-icon::before {
+  width: 55%;
+  height: 45%;
+  border: 2rpx solid;
+  border-top: none;
+  bottom: 25%;
+  left: 22.5%;
+  border-radius: 0 0 6rpx 6rpx;
+  background: linear-gradient(180deg, transparent 0%, currentColor 1%, transparent 3%);
+}
+
+.cart-icon::after {
+  width: 35%;
+  height: 3rpx;
+  background: currentColor;
+  top: 30%;
+  left: 32.5%;
+  border-radius: 2rpx;
+  transform: rotate(-10deg);
+}
+
+/* 列表图标 - 优化间距 */
+.list-icon::before {
+  width: 50%;
+  height: 2rpx;
+  background: currentColor;
+  top: 32%;
+  left: 30%;
+  border-radius: 1rpx;
+  box-shadow: 0 8rpx 0 currentColor, 0 16rpx 0 currentColor;
+}
+
+.list-icon::after {
+  width: 6rpx;
+  height: 6rpx;
+  background: currentColor;
+  border-radius: 50%;
+  top: 29rpx;
+  left: 20%;
+  box-shadow: 0 8rpx 0 currentColor, 0 16rpx 0 currentColor;
+}
+
+/* 统计图标 - 渐变效果 */
+.chart-icon::before {
+  width: 15%;
+  height: 35%;
+  background: linear-gradient(180deg, currentColor 0%, currentColor 70%, transparent 100%);
+  bottom: 25%;
+  left: 25%;
+  border-radius: 2rpx 2rpx 0 0;
+}
+
+.chart-icon::after {
+  width: 15%;
+  height: 55%;
+  background: linear-gradient(180deg, currentColor 0%, currentColor 80%, transparent 100%);
+  bottom: 25%;
+  right: 25%;
+  border-radius: 2rpx 2rpx 0 0;
+  box-shadow: -20rpx -10rpx 0 -5rpx currentColor;
+}
+
+/* 趋势上升图标 - 动态效果 */
+.trend-up-icon::before {
+  width: 45%;
+  height: 2rpx;
+  background: linear-gradient(45deg, transparent 0%, currentColor 20%, currentColor 100%);
+  transform: rotate(-25deg);
+  top: 45%;
+  left: 27.5%;
+  border-radius: 1rpx;
+}
+
+.trend-up-icon::after {
+  width: 0;
+  height: 0;
+  border-left: 6rpx solid transparent;
+  border-right: 6rpx solid transparent;
+  border-bottom: 10rpx solid currentColor;
+  top: 28%;
+  right: 25%;
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+/* 趋势下降图标 */
+.trend-down-icon::before {
+  width: 45%;
+  height: 2rpx;
+  background: linear-gradient(-45deg, transparent 0%, currentColor 20%, currentColor 100%);
+  transform: rotate(25deg);
+  top: 45%;
+  left: 27.5%;
+  border-radius: 1rpx;
+}
+
+.trend-down-icon::after {
+  width: 0;
+  height: 0;
+  border-left: 6rpx solid transparent;
+  border-right: 6rpx solid transparent;
+  border-top: 10rpx solid currentColor;
+  bottom: 28%;
+  right: 25%;
+  filter: drop-shadow(0 -2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+/* 用户图标 - 人像效果 */
+.user-icon::before {
+  width: 35%;
+  height: 35%;
+  border: 2rpx solid;
+  border-radius: 50%;
+  top: 18%;
+  left: 32.5%;
+  background: radial-gradient(circle, transparent 60%, currentColor 60%, currentColor 65%, transparent 65%);
+}
+
+.user-icon::after {
+  width: 65%;
+  height: 32%;
+  border: 2rpx solid;
+  border-top: none;
+  border-radius: 0 0 50% 50%;
+  bottom: 15%;
+  left: 17.5%;
+  background: linear-gradient(180deg, transparent 0%, currentColor 2%, transparent 4%);
+}
+
+/* 设置图标 - 齿轮效果 */
+.settings-icon::before {
+  width: 45%;
+  height: 45%;
+  border: 2rpx solid;
+  border-radius: 50%;
+  top: 27.5%;
+  left: 27.5%;
+  background: conic-gradient(from 0deg, transparent 30deg, currentColor 30deg, currentColor 60deg, transparent 60deg, transparent 90deg, currentColor 90deg, currentColor 120deg, transparent 120deg);
+  opacity: 0.2;
+}
+
+.settings-icon::after {
+  width: 18%;
+  height: 18%;
+  background: currentColor;
+  border-radius: 50%;
+  top: 41%;
+  left: 41%;
+}
+
+/* 金钱图标 - 货币符号 */
+.money-icon::before {
+  width: 55%;
+  height: 55%;
+  border: 2rpx solid;
+  border-radius: 50%;
+  top: 22.5%;
+  left: 22.5%;
+  background: radial-gradient(circle, transparent 70%, currentColor 70%, currentColor 75%, transparent 75%);
+}
+
+.money-icon::after {
+  width: 3rpx;
+  height: 35%;
+  background: currentColor;
+  top: 32.5%;
+  left: 50%;
+  border-radius: 2rpx;
+  box-shadow: 0 -8rpx 0 currentColor, 0 8rpx 0 currentColor;
+}
+
+/* 复制图标 - 重叠效果 */
+.copy-icon::before {
+  width: 45%;
+  height: 45%;
+  border: 2rpx solid;
+  top: 20%;
+  left: 20%;
+  border-radius: 2rpx;
+  background: linear-gradient(45deg, transparent 48%, currentColor 48%, currentColor 52%, transparent 52%);
+  background-size: 6rpx 6rpx;
+  opacity: 0.1;
+}
+
+.copy-icon::after {
+  width: 45%;
+  height: 45%;
+  border: 2rpx solid;
+  bottom: 20%;
+  right: 20%;
+  border-radius: 2rpx;
+  box-shadow: -4rpx -4rpx 0 -2rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 刷新图标 - 旋转箭头 */
+.refresh-icon::before {
+  width: 55%;
+  height: 55%;
+  border: 2rpx solid;
+  border-top: 2rpx solid transparent;
+  border-radius: 50%;
+  top: 22.5%;
+  left: 22.5%;
+  background: conic-gradient(from 90deg, transparent 270deg, currentColor 270deg);
+  opacity: 0.2;
+}
+
+.refresh-icon::after {
+  width: 0;
+  height: 0;
+  border-left: 5rpx solid transparent;
+  border-right: 5rpx solid transparent;
+  border-bottom: 8rpx solid currentColor;
+  top: 25%;
+  right: 30%;
+  transform: rotate(30deg);
+}
+
+/* 检查图标 - 对勾优化 */
+.check-icon::before {
+  width: 25%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(45deg);
+  top: 52%;
+  left: 30%;
+  border-radius: 2rpx;
+}
+
+.check-icon::after {
+  width: 45%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 45%;
+  left: 38%;
+  border-radius: 2rpx;
+  box-shadow: 0 0 6rpx rgba(52, 199, 89, 0.3);
+}
+
+/* 关闭图标 - 优化版本 */
+.close-icon::before {
+  width: 50%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(45deg);
+  top: 50%;
+  left: 25%;
+  border-radius: 2rpx;
+}
+
+.close-icon::after {
+  width: 50%;
+  height: 3rpx;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 50%;
+  left: 25%;
+  border-radius: 2rpx;
+}
+
+/* 其他图标样式继续优化... */
+.ruler-icon::before {
+  width: 65%;
+  height: 3rpx;
+  background: currentColor;
+  top: 50%;
+  left: 17.5%;
+  border-radius: 2rpx;
+}
+
+.ruler-icon::after {
+  width: 2rpx;
+  height: 15%;
+  background: currentColor;
+  top: 42.5%;
+  left: 30%;
+  border-radius: 1rpx;
+  box-shadow: 15rpx 0 0 currentColor, 30rpx 0 0 currentColor;
+}
+
+.calendar-icon::before {
+  width: 65%;
+  height: 55%;
+  border: 2rpx solid;
+  bottom: 20%;
+  left: 17.5%;
+  border-radius: 2rpx;
+  background: linear-gradient(180deg, transparent 0%, currentColor 1%, transparent 3%, transparent 25%, currentColor 25%, currentColor 27%, transparent 27%);
+}
+
+.calendar-icon::after {
+  width: 65%;
+  height: 3rpx;
+  background: currentColor;
+  top: 38%;
+  left: 17.5%;
+  border-radius: 2rpx;
+}
+
+.info-icon::before {
+  width: 55%;
+  height: 55%;
+  border: 2rpx solid;
+  border-radius: 50%;
+  top: 22.5%;
+  left: 22.5%;
+  background: radial-gradient(circle, transparent 65%, currentColor 65%, currentColor 70%, transparent 70%);
+}
+
+.info-icon::after {
+  width: 3rpx;
+  height: 18%;
+  background: currentColor;
+  top: 48%;
+  left: 50%;
+  border-radius: 2rpx;
+  box-shadow: 0 -12rpx 0 -1rpx currentColor;
+}
+
+/* 交互状态增强 */
+.linear-icon.clickable {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.linear-icon.clickable:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.linear-icon.clickable:active {
+  transform: scale(0.95);
+  transition: all 0.1s ease;
+}
+
+.linear-icon.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+/* 动画效果增强 */
+.linear-icon.spin {
+  animation: spin 2s linear infinite;
+}
+
+.linear-icon.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.linear-icon.bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.linear-icon.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6rpx);
+  }
+  60% {
+    transform: translateY(-3rpx);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2rpx); }
+  20%, 40%, 60%, 80% { transform: translateX(2rpx); }
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .linear-icon.large {
+    width: 56rpx;
+    height: 56rpx;
+  }
+  
+  .linear-icon.xlarge {
+    width: 72rpx;
+    height: 72rpx;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .linear-icon.primary {
+    color: #0a84ff;
+  }
+  
+  .linear-icon.secondary {
+    color: #8e8e93;
+  }
+  
+  .linear-icon.success {
+    color: #30d158;
+  }
+  
+  .linear-icon.warning {
+    color: #ff9f0a;
+  }
+  
+  .linear-icon.danger {
+    color: #ff453a;
+  }
+}
+
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .linear-icon .icon-shape::before,
+  .linear-icon .icon-shape::after {
+    border-width: 3rpx;
+  }
+  
+  .linear-icon.thin .icon-shape::before,
+  .linear-icon.thin .icon-shape::after {
+    border-width: 2rpx;
+  }
+}

@@ -1,0 +1,115 @@
+<!--pages/profile/profile.wxml-->
+<scroll-view class="container" scroll-y="true" enable-back-to-top="true">
+  <!-- 红色边框主要内容区域 -->
+  <view class="main-border-area">
+    
+    <!-- 用户信息卡片 -->
+    <view class="user-card">
+      <view class="user-avatar">
+        <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" class="avatar-image"></image>
+        <linear-icon wx:else type="user" size="large" weight="medium" color="primary"></linear-icon>
+      </view>
+      <view class="user-info">
+        <text class="user-name">{{userInfo.nickName || '店铺管理员'}}</text>
+        <text class="user-role">进销存管理系统</text>
+      </view>
+      <view class="edit-btn" bindtap="getUserProfile">编辑</view>
+    </view>
+
+    <!-- 核心数据统计 -->
+    <view class="stats-section">
+      <view class="stat-item">
+        <text class="stat-number">{{customerCount}}</text>
+        <text class="stat-label">客户</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{supplierCount}}</text>
+        <text class="stat-label">供应商</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">21</text>
+        <text class="stat-label">商品</text>
+      </view>
+    </view>
+
+    <!-- 核心功能菜单 -->
+    <view class="menu-section">
+      <view class="menu-title">核心功能</view>
+      
+      <view class="menu-grid">
+        <view class="menu-item" bindtap="goToCustomers">
+          <image class="menu-icon-img" src="/images/customer-manage-colored.png"></image>
+          <text class="menu-text">客户管理</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToSuppliers">
+          <image class="menu-icon-img" src="/images/supplier-manage-colored.png"></image>
+          <text class="menu-text">厂商管理</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToCategoryManage">
+          <linear-icon type="folder" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="menu-text">分类管理</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToUnitManage">
+          <linear-icon type="ruler" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="menu-text">单位管理</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToProductAttributes">
+          <linear-icon type="tag" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="menu-text">属性管理</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToGreetingDemo">
+          <linear-icon type="weather" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="menu-text">问候天气</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToCanvasDemo">
+          <linear-icon type="palette" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="menu-text">Canvas装饰</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToAuthManage">
+          <view class="menu-icon">🔐</view>
+          <text class="menu-text">授权管理</text>
+        </view>
+        
+        <view class="menu-item" bindtap="goToStatistics">
+          <linear-icon type="chart" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="menu-text">数据统计</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 系统工具 -->
+    <view class="tools-section">
+      <view class="tools-title">系统工具</view>
+      
+      <view class="tools-list">
+        <view class="tool-item" bindtap="exportData">
+          <view class="tool-icon">📤</view>
+          <text class="tool-text">导出数据</text>
+        </view>
+        
+        <view class="tool-item" bindtap="importData">
+          <view class="tool-icon">📥</view>
+          <text class="tool-text">导入数据</text>
+        </view>
+        
+        <view class="tool-item" bindtap="clearData">
+          <linear-icon type="delete" size="medium" weight="medium" color="danger"></linear-icon>
+          <text class="tool-text">清空数据</text>
+        </view>
+        
+        <view class="tool-item" bindtap="about">
+          <linear-icon type="info" size="medium" weight="medium" color="primary"></linear-icon>
+          <text class="tool-text">关于应用</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>

@@ -1,0 +1,77 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/products/products",
+    "pages/add-product/add-product",
+    "pages/product-add/product-add",
+    "pages/sales/sales",
+    "pages/add-sale/add-sale",
+    "pages/statistics/statistics",
+    "pages/settings/settings",
+    "pages/profile/profile",
+    "pages/category-manage/category-manage",
+    "pages/unit-manage/unit-manage",
+    "pages/unit-edit/unit-edit",
+    "pages/product-edit/product-edit",
+    "pages/sale-edit/sale-edit",
+    "pages/product-attributes/product-attributes",
+    "pages/customers/customers",
+    "pages/customer-edit/customer-edit",
+    "pages/suppliers/suppliers",
+    "pages/supplier-edit/supplier-edit",
+    "pages/purchase-orders/purchase-orders",
+    "pages/purchase-order-edit/purchase-order-edit",
+    "pages/revenue-flow/revenue-flow"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f8f9fa"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#ff6b9d",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/products/products",
+        "text": "商品",
+        "iconPath": "images/products.png",
+        "selectedIconPath": "images/products-active.png"
+      },
+      {
+        "pagePath": "pages/sales/sales",
+        "text": "销售",
+        "iconPath": "images/sales.png",
+        "selectedIconPath": "images/sales-active.png"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "text": "统计",
+        "iconPath": "images/statistics.png",
+        "selectedIconPath": "images/statistics-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "dynamic-attributes": "/components/dynamic-attributes/dynamic-attributes",
+    "greeting-weather": "/components/greeting-weather/greeting-weather",
+    "linear-icon": "/components/linear-icon/linear-icon"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

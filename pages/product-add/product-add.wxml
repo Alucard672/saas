@@ -1,0 +1,239 @@
+<!--pages/product-add/product-add.wxml-->
+<view class="container">
+  <!-- 主要内容区域 -->
+  <scroll-view class="main-content" scroll-y="true" enhanced="true">
+    
+    <!-- 核心信息区域 -->
+    <view class="section core-section">
+      <view class="section-title">基本信息</view>
+      
+      <!-- 商品名称 -->
+      <view class="form-group">
+        <view class="form-label required">商品名称</view>
+        <input 
+          class="form-input {{errors.name ? 'error' : ''}}"
+          placeholder="请输入商品名称"
+          value="{{formData.name}}"
+          data-field="name"
+          bindinput="onInputChange"
+          maxlength="50"
+        />
+        <view wx:if="{{errors.name}}" class="error-text">{{errors.name}}</view>
+      </view>
+
+      <!-- 商品分类和单位 -->
+      <view class="form-row">
+        <view class="form-group half">
+          <view class="form-label required">商品分类</view>
+          <picker 
+            class="form-picker {{errors.category ? 'error' : ''}}"
+            mode="selector"
+            range="{{categories}}"
+            value="{{categoryIndex}}"
+            bindchange="onCategoryChange"
+          >
+            <view class="picker-text {{formData.category ? '' : 'placeholder'}}">
+              {{formData.category || '请选择分类'}}
+            </view>
+            <view class="picker-arrow">▼</view>
+          </picker>
+          <view wx:if="{{errors.category}}" class="error-text">{{errors.category}}</view>
+        </view>
+        
+        <view class="form-group half">
+          <view class="form-label">计量单位</view>
+          <picker 
+            class="form-picker"
+            mode="selector"
+            range="{{units}}"
+            value="{{unitIndex}}"
+            bindchange="onUnitChange"
+          >
+            <view class="picker-text">{{formData.unit || units[0]}}</view>
+            <view class="picker-arrow">▼</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 价格信息 -->
+      <view class="form-row">
+        <view class="form-group half">
+          <view class="form-label required price-label">销售价格</view>
+          <view class="price-input-wrapper">
+            <text class="currency-symbol">¥</text>
+            <input 
+              class="form-input price-input {{errors.price ? 'error' : ''}}"
+              placeholder="0.00"
+              value="{{formData.price}}"
+              data-field="price"
+              bindinput="onInputChange"
+              type="digit"
+            />
+          </view>
+          <view wx:if="{{errors.price}}" class="error-text">{{errors.price}}</view>
+        </view>
+        
+        <view class="form-group half">
+          <view class="form-label">成本价格</view>
+          <view class="price-input-wrapper">
+            <text class="currency-symbol">¥</text>
+            <input 
+              class="form-input price-input {{errors.costPrice ? 'error' : ''}}"
+              placeholder="0.00"
+              value="{{formData.costPrice}}"
+              data-field="costPrice"
+              bindinput="onInputChange"
+              type="digit"
+            />
+          </view>
+          <view wx:if="{{errors.costPrice}}" class="error-text">{{errors.costPrice}}</view>
+        </view>
+      </view>
+
+      <!-- 库存和条码 -->
+      <view class="form-row">
+        <view class="form-group half">
+          <view class="form-label required">库存数量</view>
+          <input 
+            class="form-input {{errors.stock ? 'error' : ''}}"
+            placeholder="请输入库存数量"
+            value="{{formData.stock}}"
+            data-field="stock"
+            bindinput="onInputChange"
+            type="number"
+          />
+          <view wx:if="{{errors.stock}}" class="error-text">{{errors.stock}}</view>
+        </view>
+        
+        <view class="form-group half">
+          <view class="form-label">商品条码</view>
+          <input 
+            class="form-input"
+            placeholder="扫描或输入条码"
+            value="{{formData.barcode}}"
+            data-field="barcode"
+            bindinput="onInputChange"
+          />
+        </view>
+      </view>
+
+      <!-- 动态属性区域 -->
+      <view wx:if="{{formData.category}}" class="attributes-section">
+        <dynamic-attributes 
+          id="dynamic-attributes"
+          category="{{formData.category}}"
+          attributes="{{formData.attributes}}"
+          bind:attributeschange="onAttributesChange"
+        />
+      </view>
+    </view>
+
+    <!-- 图片上传区域 -->
+    <view class="section image-section">
+      <view class="section-title">商品图片</view>
+      
+      <!-- 图片预览区域 -->
+      <view class="image-preview-area">
+        <view wx:if="{{imageList.length === 0}}" class="upload-placeholder" bindtap="showImageUploadModal">
+          <view class="upload-icon">📷</view>
+          <view class="upload-text">点击上传商品图片</view>
+          <view class="upload-hint">支持上传{{maxImageCount}}张图片</view>
+        </view>
+        
+        <view wx:else class="image-grid">
+          <view 
+            wx:for="{{imageList}}" 
+            wx:key="index" 
+            class="image-item"
+            data-index="{{index}}"
+            bindtap="previewImage"
+          >
+            <image class="image-preview" src="{{item.url}}" mode="aspectFill" />
+            <view class="image-delete" data-index="{{index}}" bindtap="deleteImage" catchtap="deleteImage">
+              <text class="delete-icon">×</text>
+            </view>
+          </view>
+          
+          <view wx:if="{{imageList.length < maxImageCount}}" class="add-image-btn" bindtap="showImageUploadModal">
+            <text class="add-icon">+</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品详情区域 -->
+    <view class="section detail-section">
+      <view class="section-title">商品详情</view>
+      
+      <view class="editor-container">
+        <editor 
+          id="editor"
+          class="rich-editor"
+          placeholder="请输入商品详细描述..."
+          bindfocus="onEditorFocus"
+          bindblur="onEditorBlur"
+          bindinput="onEditorInput"
+          show-img-size
+          show-img-toolbar
+          show-img-resize
+        />
+      </view>
+    </view>
+
+    <!-- 底部占位空间 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 固定底部操作栏 -->
+  <view class="bottom-actions">
+    <view class="action-buttons">
+      <button class="btn btn-secondary" bindtap="cancelForm">取消</button>
+      <button class="btn btn-reset" bindtap="resetForm">重置</button>
+      <button 
+        class="btn btn-primary {{submitting ? 'loading' : ''}}" 
+        bindtap="submitForm"
+        disabled="{{submitting}}"
+      >
+        {{submitting ? '提交中...' : '提交'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 图片上传弹窗 -->
+  <view wx:if="{{showImageUpload}}" class="image-upload-modal">
+    <view class="modal-mask" bindtap="hideImageUploadModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <view class="modal-title">上传商品图片</view>
+        <view class="modal-close" bindtap="hideImageUploadModal">×</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="upload-area" bindtap="chooseImage">
+          <view class="upload-icon-large">📷</view>
+          <view class="upload-title">选择图片</view>
+          <view class="upload-desc">支持从相册选择或拍照</view>
+          <view class="upload-limit">最多可上传{{maxImageCount}}张图片</view>
+        </view>
+        
+        <view wx:if="{{imageList.length > 0}}" class="selected-images">
+          <view class="selected-title">已选择 {{imageList.length}} 张图片</view>
+          <view class="selected-grid">
+            <view 
+              wx:for="{{imageList}}" 
+              wx:key="index" 
+              class="selected-item"
+            >
+              <image class="selected-preview" src="{{item.url}}" mode="aspectFill" />
+              <view class="selected-delete" data-index="{{index}}" bindtap="deleteImage">×</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="btn btn-secondary" bindtap="hideImageUploadModal">完成</button>
+      </view>
+    </view>
+  </view>
+</view>

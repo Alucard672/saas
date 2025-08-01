@@ -1,0 +1,411 @@
+/**app.wxss**/
+
+/* 全局样式重置 */
+page {
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
+  line-height: 1.6;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* 通用容器样式 */
+.container {
+  background: #f8f9fa;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* 主要内容区域 */
+.main-content {
+  padding: 10rpx 24rpx 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 卡片样式 */
+.card {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 20rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  background: #007aff;
+}
+
+.btn:active {
+  opacity: 0.8;
+}
+
+.btn-primary {
+  background: #ff6b9d;
+}
+
+.btn-secondary {
+  background: #4facfe;
+}
+
+.btn-success {
+  background: #43e97b;
+}
+
+.btn-warning {
+  background: #fa709a;
+}
+
+/* 文字样式 */
+.text-primary {
+  color: #333333;
+}
+
+.text-secondary {
+  color: #666666;
+}
+
+.text-muted {
+  color: #999999;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* 标题样式 */
+.title-large {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 16rpx;
+}
+
+.title-medium {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+
+.title-small {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+/* 布局样式 */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.flex-around {
+  justify-content: space-around;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* 间距样式 */
+.mt-10 { margin-top: 10rpx; }
+.mt-20 { margin-top: 20rpx; }
+.mt-30 { margin-top: 30rpx; }
+
+.mb-10 { margin-bottom: 10rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.mb-30 { margin-bottom: 30rpx; }
+
+.ml-10 { margin-left: 10rpx; }
+.ml-20 { margin-left: 20rpx; }
+
+.mr-10 { margin-right: 10rpx; }
+.mr-20 { margin-right: 20rpx; }
+
+.p-10 { padding: 10rpx; }
+.p-20 { padding: 20rpx; }
+.p-30 { padding: 30rpx; }
+
+/* 状态样式 */
+.status-success {
+  color: #43e97b;
+  background: rgba(67, 233, 123, 0.1);
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.status-warning {
+  color: #fa709a;
+  background: rgba(250, 112, 154, 0.1);
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.status-danger {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+/* 浮动按钮样式 */
+.fab {
+  position: fixed;
+  bottom: 100rpx;
+  right: 30rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #ff6b9d;
+  color: #ffffff;
+  font-size: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.3);
+  z-index: 1000;
+}
+
+.fab:active {
+  opacity: 0.8;
+}
+
+/* 列表样式 */
+.list-item {
+  background: #ffffff;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.list-item:active {
+  background: #f8f9fa;
+}
+
+/* 导航栏样式 */
+.nav-bar {
+  background: #ffffff;
+  padding: 20rpx 24rpx;
+  margin-bottom: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-title {
+  text-align: center;
+}
+
+.nav-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* 网格样式 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 输入框样式 */
+.input {
+  background: #ffffff;
+  border: 2rpx solid #e9ecef;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333333;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #ff6b9d;
+}
+
+/* 搜索框样式 */
+.search-box {
+  background: #ffffff;
+  border-radius: 50rpx;
+  padding: 16rpx 24rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  margin-bottom: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  font-size: 32rpx;
+  color: #999999;
+  margin-right: 16rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  margin-right: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.tag-primary {
+  background: rgba(255, 107, 157, 0.1);
+  color: #ff6b9d;
+}
+
+.tag-secondary {
+  background: rgba(79, 172, 254, 0.1);
+  color: #4facfe;
+}
+
+.tag-success {
+  background: rgba(67, 233, 123, 0.1);
+  color: #43e97b;
+}
+
+.tag-active {
+  background: #ff6b9d;
+  color: #ffffff;
+}
+
+/* 分割线样式 */
+.divider {
+  height: 1rpx;
+  background: #e9ecef;
+  margin: 20rpx 0;
+}
+
+/* 空状态样式 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  color: #999999;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  opacity: 0.7;
+}
+
+/* 加载样式 */
+.loading {
+  text-align: center;
+  padding: 40rpx;
+  color: #999999;
+  font-size: 28rpx;
+}
+
+/* 简单动画 */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* 响应式适配 */
+@media screen and (max-width: 750rpx) {
+  .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .main-content {
+    padding: 20rpx 16rpx;
+    padding-top: 40rpx;
+  }
+  
+  .card {
+    padding: 20rpx;
+  }
+  
+  .list-item {
+    padding: 20rpx;
+  }
+}
+
+/* 防止横向滚动的全局设置 */
+view, text, image {
+  box-sizing: border-box;
+  max-width: 100%;
+  word-wrap: break-word;
+}

@@ -1,0 +1,272 @@
+<!--pages/product-attributes/product-attributes.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 分类列表 -->
+    <view class="section">
+    <view class="section-header">
+      <text class="section-title">商品分类</text>
+      <button class="btn-add" bindtap="showCategoryForm" data-type="add">
+        <text class="icon">+</text>
+        <text>添加分类</text>
+      </button>
+    </view>
+
+    <view class="category-list">
+      <view 
+        wx:for="{{categories}}" 
+        wx:key="id" 
+        class="category-item {{selectedCategory && selectedCategory.id === item.id ? 'active' : ''}}"
+        bindtap="selectCategory"
+        data-index="{{index}}"
+      >
+        <view class="category-info">
+          <text class="category-name">{{item.name}}</text>
+          <text class="category-desc">{{item.description || '暂无描述'}}</text>
+          <text class="attribute-count">{{item.attributes ? item.attributes.length : 0}} 个属性</text>
+        </view>
+        <view class="category-actions">
+          <button class="btn-edit" bindtap="showCategoryForm" data-type="edit" data-index="{{index}}">编辑</button>
+          <button class="btn-delete" bindtap="deleteCategory" data-index="{{index}}">删除</button>
+        </view>
+      </view>
+      
+      <view wx:if="{{categories.length === 0}}" class="empty-state">
+        <text class="empty-text">暂无分类，点击上方按钮添加</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 属性列表 -->
+  <view class="section" wx:if="{{selectedCategory}}">
+    <view class="section-header">
+      <text class="section-title">{{selectedCategory.name}} - 属性配置</text>
+      <button class="btn-add" bindtap="showAttributeForm" data-type="add">
+        <text class="icon">+</text>
+        <text>添加属性</text>
+      </button>
+    </view>
+
+    <view class="attribute-list">
+      <view 
+        wx:for="{{selectedCategory.attributes}}" 
+        wx:key="id" 
+        class="attribute-item"
+      >
+        <view class="attribute-info">
+          <view class="attribute-header">
+            <text class="attribute-name">{{item.name}}</text>
+            <view class="attribute-badges">
+              <text class="badge type-badge">{{item.type}}</text>
+              <text wx:if="{{item.required}}" class="badge required-badge">必填</text>
+            </view>
+          </view>
+          
+          <view class="attribute-details">
+            <text class="attribute-type">类型：{{item.type}}</text>
+            <text wx:if="{{item.options && item.options.length > 0}}" class="attribute-options">
+              选项：{{item.options.join('、')}}
+            </text>
+            <text wx:if="{{item.defaultValue}}" class="attribute-default">
+              默认值：{{item.defaultValue}}
+            </text>
+          </view>
+        </view>
+        
+        <view class="attribute-actions">
+          <button class="btn-edit" bindtap="showAttributeForm" data-type="edit" data-index="{{index}}">编辑</button>
+          <button class="btn-delete" bindtap="deleteAttribute" data-index="{{index}}">删除</button>
+        </view>
+      </view>
+      
+      <view wx:if="{{!selectedCategory.attributes || selectedCategory.attributes.length === 0}}" class="empty-state">
+        <text class="empty-text">暂无属性，点击上方按钮添加</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{!selectedCategory && categories.length > 0}}" class="no-selection">
+    <text class="no-selection-text">请选择一个分类来配置属性</text>
+  </view>
+  </view>
+</view>
+
+<!-- 分类弹窗 -->
+<view class="modal-overlay" wx:if="{{showCategoryModal}}" bindtap="hideCategoryModal">
+  <view class="modal-content" catchtap="">
+    <view class="modal-header">
+      <text class="modal-title">{{editingIndex >= 0 ? '编辑分类' : '添加分类'}}</text>
+      <button class="modal-close" bindtap="hideCategoryModal">×</button>
+    </view>
+    
+    <view class="modal-body">
+      <view class="form-group">
+        <text class="form-label">分类名称 *</text>
+        <input 
+          class="form-input {{categoryErrors.name ? 'error' : ''}}"
+          placeholder="请输入分类名称"
+          value="{{categoryForm.name}}"
+          bindinput="onCategoryInput"
+          data-field="name"
+        />
+        <text wx:if="{{categoryErrors.name}}" class="error-text">{{categoryErrors.name}}</text>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">分类描述</text>
+        <textarea 
+          class="form-textarea"
+          placeholder="请输入分类描述"
+          value="{{categoryForm.description}}"
+          bindinput="onCategoryInput"
+          data-field="description"
+        ></textarea>
+      </view>
+      
+      <!-- 快速模板 -->
+      <view class="form-group" wx:if="{{editingIndex < 0}}">
+        <text class="form-label">快速模板</text>
+        <view class="template-buttons">
+          <button 
+            wx:for="{{categoryTemplates}}" 
+            wx:for-item="template"
+            wx:for-index="templateName"
+            wx:key="templateName"
+            class="template-btn"
+            bindtap="applyCategoryTemplate"
+            data-template="{{templateName}}"
+          >
+            {{templateName}}
+          </button>
+        </view>
+      </view>
+    </view>
+    
+    <view class="modal-footer">
+      <button class="btn-cancel" bindtap="hideCategoryModal">取消</button>
+      <button class="btn-confirm" bindtap="saveCategory">保存</button>
+    </view>
+  </view>
+</view>
+
+<!-- 属性弹窗 -->
+<view class="modal-overlay" wx:if="{{showAttributeModal}}" bindtap="hideAttributeModal">
+  <view class="modal-content large" catchtap="">
+    <view class="modal-header">
+      <text class="modal-title">{{editingIndex >= 0 ? '编辑属性' : '添加属性'}}</text>
+      <button class="modal-close" bindtap="hideAttributeModal">×</button>
+    </view>
+    
+    <view class="modal-body">
+      <view class="form-group">
+        <text class="form-label">属性名称 *</text>
+        <input 
+          class="form-input {{attributeErrors.name ? 'error' : ''}}"
+          placeholder="请输入属性名称"
+          value="{{attributeForm.name}}"
+          bindinput="onAttributeInput"
+          data-field="name"
+        />
+        <text wx:if="{{attributeErrors.name}}" class="error-text">{{attributeErrors.name}}</text>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">属性类型 *</text>
+        <picker
+          class="form-picker"
+          mode="selector"
+          range="{{attributeTypes}}"
+          range-key="label"
+          value="{{attributeTypeIndex}}"
+          bindchange="onAttributeTypeChange"
+        >
+          <view class="picker-display">
+            {{attributeTypes[attributeTypeIndex].label}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-group">
+        <view class="checkbox-group">
+          <checkbox 
+            checked="{{attributeForm.required}}"
+            bindchange="onAttributeInput"
+            data-field="required"
+          />
+          <text class="checkbox-label">必填字段</text>
+        </view>
+      </view>
+      
+      <!-- 选项配置 -->
+      <view class="form-group" wx:if="{{attributeForm.type === 'select' || attributeForm.type === 'multiSelect'}}">
+        <view class="options-header">
+          <text class="form-label">选项配置 *</text>
+          <button class="btn-add-option" bindtap="addOption">+ 添加选项</button>
+        </view>
+        
+        <view class="options-list">
+          <view 
+            wx:for="{{attributeForm.options}}" 
+            wx:key="index" 
+            class="option-item"
+          >
+            <input 
+              class="option-input"
+              placeholder="请输入选项"
+              value="{{item}}"
+              bindinput="onOptionInput"
+              data-index="{{index}}"
+            />
+            <button class="btn-remove-option" bindtap="removeOption" data-index="{{index}}">×</button>
+          </view>
+        </view>
+        
+        <text wx:if="{{attributeErrors.options}}" class="error-text">{{attributeErrors.options}}</text>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">默认值</text>
+        <input 
+          class="form-input"
+          placeholder="请输入默认值"
+          value="{{attributeForm.defaultValue}}"
+          bindinput="onAttributeInput"
+          data-field="defaultValue"
+        />
+      </view>
+      
+      <!-- 验证规则 -->
+      <view class="form-group" wx:if="{{attributeForm.type === 'text' || attributeForm.type === 'number'}}">
+        <text class="form-label">验证规则</text>
+        <view class="validation-rules">
+          <view class="rule-item">
+            <text class="rule-label">最小值/长度：</text>
+            <input 
+              class="rule-input"
+              type="number"
+              placeholder="不限制"
+              value="{{attributeForm.validation.min}}"
+              bindinput="onAttributeInput"
+              data-field="validation.min"
+            />
+          </view>
+          <view class="rule-item">
+            <text class="rule-label">最大值/长度：</text>
+            <input 
+              class="rule-input"
+              type="number"
+              placeholder="不限制"
+              value="{{attributeForm.validation.max}}"
+              bindinput="onAttributeInput"
+              data-field="validation.max"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="modal-footer">
+      <button class="btn-cancel" bindtap="hideAttributeModal">取消</button>
+      <button class="btn-confirm" bindtap="saveAttribute">保存</button>
+    </view>
+  </view>
+</view>

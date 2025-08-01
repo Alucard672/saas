@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- 支付宝蓝色背景 -->
+  <rect width="64" height="64" rx="12" fill="#1677FF"/>
+  
+  <!-- 支付宝LOGO -->
+  <g transform="translate(12, 16)">
+    <!-- 主体字母A -->
+    <path d="M 20 8 L 8 32 L 14 32 L 16 26 L 24 26 L 26 32 L 32 32 L 20 8 Z M 18 20 L 22 20 L 20 14 Z" fill="#ffffff"/>
+    
+    <!-- 下方装饰线 -->
+    <rect x="6" y="28" width="28" height="2" rx="1" fill="#ffffff"/>
+    
+    <!-- 支付宝特色圆点 -->
+    <circle cx="35" cy="12" r="3" fill="#ffffff"/>
+    <circle cx="35" cy="20" r="2" fill="#ffffff" opacity="0.8"/>
+  </g>
+</svg>

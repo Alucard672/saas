@@ -1,0 +1,144 @@
+<!--pages/products/products.wxml-->
+<view class="container">
+  <!-- 主要内容区域 -->
+  <scroll-view class="main-content" scroll-y="true" enable-back-to-top="true">
+    <!-- 搜索和筛选区域 -->
+    <view class="search-filter-section fade-in">
+      <view class="search-container">
+        <view class="search-box">
+          <linear-icon type="search" size="medium" weight="regular" color="secondary" class="search-icon"></linear-icon>
+          <input class="search-input" placeholder="搜索商品名称或编码" value="{{searchKeyword}}" bindinput="onSearchInput" />
+        </view>
+      </view>
+      
+      <view class="filter-tabs">
+        <view class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}" bindtap="filterAll">
+          <text class="tab-text">全部</text>
+        </view>
+        <view class="filter-tab {{currentFilter === 'normal' ? 'active' : ''}}" bindtap="filterNormal">
+          <text class="tab-text">正常</text>
+        </view>
+        <view class="filter-tab {{currentFilter === 'low_stock' ? 'active' : ''}}" bindtap="filterLowStock">
+          <text class="tab-text">低库存</text>
+        </view>
+        <view class="filter-tab {{currentFilter === 'out_of_stock' ? 'active' : ''}}" bindtap="filterOutOfStock">
+          <text class="tab-text">缺货</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计概览 -->
+    <view class="stats-overview fade-in" style="animation-delay: 0.1s;">
+      <view class="overview-card primary">
+        <linear-icon type="package" size="large" weight="regular" color="primary" class="overview-icon"></linear-icon>
+        <view class="overview-content">
+          <view class="overview-number">{{totalProducts}}</view>
+          <view class="overview-label">商品总数</view>
+        </view>
+      </view>
+      
+      <view class="overview-mini">
+        <view class="mini-card">
+          <view class="mini-number">¥{{totalValue}}</view>
+          <view class="mini-label">库存总值</view>
+        </view>
+        <view class="mini-card warning" wx:if="{{lowStockCount > 0}}" bindtap="handleStockAlert">
+          <view class="mini-number">{{lowStockCount}}</view>
+          <view class="mini-label">库存预警</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品列表 -->
+    <view class="products-section fade-in" style="animation-delay: 0.2s;">
+      <view class="section-header" wx:if="{{filteredProducts.length > 0}}">
+        <text class="section-title">商品列表</text>
+        <text class="section-count">共 {{filteredProducts.length}} 件商品</text>
+      </view>
+      
+      <view class="products-list">
+        <view class="product-item-wrapper" wx:for="{{filteredProducts}}" wx:key="id">
+          <!-- 商品主体 -->
+          <view class="product-item {{swipeItems[item.id] ? 'swiped' : ''}}" 
+                bindtouchstart="onTouchStart" 
+                bindtouchmove="onTouchMove" 
+                bindtouchend="onTouchEnd"
+                bindtap="onProductTap"
+                data-id="{{item.id}}">
+            
+            <!-- 商品状态指示器 -->
+            <view class="status-indicator {{item.status === 'normal' ? 'normal' : item.status === 'low_stock' ? 'warning' : 'danger'}}"></view>
+            
+            <!-- 商品内容 -->
+            <view class="product-content">
+              <!-- 商品头部 -->
+              <view class="product-header">
+                <view class="product-avatar">
+                  <image class="product-image" src="{{item.image}}" mode="aspectFill" />
+                </view>
+                <view class="product-basic">
+                  <text class="product-name">{{item.name}}</text>
+                  <text class="product-code">{{item.code}}</text>
+                  <text class="product-category">{{item.category}}</text>
+                </view>
+                <view class="product-status">
+                  <text class="status-text {{item.status}}">
+                    {{item.status === 'normal' ? '正常' : item.status === 'low_stock' ? '低库存' : '缺货'}}
+                  </text>
+                </view>
+              </view>
+              
+              <!-- 商品信息 -->
+              <view class="product-info">
+                <view class="info-row">
+                  <view class="info-item">
+                    <text class="info-label">售价</text>
+                    <text class="info-value price">¥{{item.price}}</text>
+                  </view>
+                  <view class="info-item">
+                    <text class="info-label">库存</text>
+                    <text class="info-value {{item.stock <= item.minStock ? 'warning' : ''}}">{{item.stock}}</text>
+                  </view>
+                  <view class="info-item">
+                    <text class="info-label">销量</text>
+                    <text class="info-value">{{item.sales}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          
+          <!-- 左滑操作按钮 -->
+          <view class="swipe-actions {{swipeItems[item.id] ? 'show' : ''}}">
+            <view class="action-btn edit" catchtap="editProduct" data-id="{{item.id}}">
+              <linear-icon type="edit" size="small" weight="regular" color="primary" class="action-icon"></linear-icon>
+              <text class="action-text">编辑</text>
+            </view>
+            <view class="action-btn delete" catchtap="deleteProduct" data-id="{{item.id}}">
+              <linear-icon type="delete" size="small" weight="regular" color="danger" class="action-icon"></linear-icon>
+              <text class="action-text">删除</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state fade-in" wx:if="{{filteredProducts.length === 0}}" style="animation-delay: 0.2s;">
+        <linear-icon type="package" size="xlarge" weight="thin" color="muted" class="empty-icon"></linear-icon>
+        <text class="empty-title">{{searchKeyword ? '未找到相关商品' : '暂无商品'}}</text>
+        <text class="empty-subtitle">{{searchKeyword ? '试试其他关键词' : '点击右下角按钮添加商品'}}</text>
+        <view class="empty-action" bindtap="addProduct" wx:if="{{!searchKeyword}}">
+          <text class="action-text">添加商品</text>
+        </view>
+      </view>
+      
+      <!-- 底部安全区域 -->
+      <view class="bottom-safe-area"></view>
+    </view>
+  </scroll-view>
+
+  <!-- 浮动添加按钮 -->
+  <view class="fab" bindtap="addProduct">
+    <linear-icon type="plus" size="medium" weight="regular" color="white" class="fab-icon"></linear-icon>
+  </view>
+</view>

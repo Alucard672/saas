@@ -1,0 +1,8 @@
+{
+  "backgroundColor": "#f5f5f5",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "linear-icon": "/components/linear-icon/linear-icon"
+  },
+  "navigationBarTitleText": "单位管理"
+}

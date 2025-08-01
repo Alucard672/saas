@@ -1,0 +1,237 @@
+<!--pages/product-edit/product-edit.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 原始数据参考区域 -->
+    <view class="reference-section">
+    <view class="reference-header">
+      <text class="reference-title">原始数据参考</text>
+      <text class="reference-subtitle">修改前的商品信息</text>
+    </view>
+    <view class="reference-content">
+      <view class="reference-item">
+        <text class="reference-label">商品名称：</text>
+        <text class="reference-value">{{originalData.name}}</text>
+      </view>
+      <view class="reference-item">
+        <text class="reference-label">售价：</text>
+        <text class="reference-value price">¥{{originalData.price}}</text>
+      </view>
+      <view class="reference-item">
+        <text class="reference-label">库存：</text>
+        <text class="reference-value">{{originalData.stock}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑表单 -->
+  <scroll-view class="form-container" scroll-y="true">
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-header">
+        <text class="section-title">基本信息</text>
+      </view>
+      
+      <view class="form-group">
+        <view class="form-label required">商品名称</view>
+        <input 
+          class="form-input {{errors.name ? 'error' : ''}}" 
+          placeholder="请输入商品名称" 
+          value="{{formData.name}}"
+          data-field="name"
+          bindinput="onFormInput"
+          maxlength="50"
+        />
+        <text class="error-text" wx:if="{{errors.name}}">{{errors.name}}</text>
+      </view>
+
+      <view class="form-group">
+        <view class="form-label required">商品编码</view>
+        <input 
+          class="form-input {{errors.code ? 'error' : ''}}" 
+          placeholder="请输入商品编码" 
+          value="{{formData.code}}"
+          data-field="code"
+          bindinput="onFormInput"
+          maxlength="20"
+        />
+        <text class="error-text" wx:if="{{errors.code}}">{{errors.code}}</text>
+      </view>
+
+      <view class="form-group">
+        <view class="form-label required">商品分类</view>
+        <picker 
+          class="form-picker {{errors.category ? 'error' : ''}}"
+          mode="selector"
+          range="{{categories}}"
+          range-key="name"
+          value="{{categoryIndex}}"
+          bindchange="onCategoryChange"
+        >
+          <view class="picker-display">
+            {{formData.category || '请选择分类'}}
+          </view>
+        </picker>
+        <text class="error-text" wx:if="{{errors.category}}">{{errors.category}}</text>
+      </view>
+
+      <view class="form-group">
+        <view class="form-label required">商品单位</view>
+        <picker 
+          class="form-picker {{errors.unit ? 'error' : ''}}"
+          mode="selector"
+          range="{{units}}"
+          value="{{unitIndex}}"
+          bindchange="onUnitChange"
+        >
+          <view class="picker-display">
+            {{formData.unit || '请选择单位'}}
+          </view>
+        </picker>
+        <text class="error-text" wx:if="{{errors.unit}}">{{errors.unit}}</text>
+      </view>
+    </view>
+
+    <!-- 价格信息 -->
+    <view class="form-section">
+      <view class="section-header">
+        <text class="section-title">价格信息</text>
+      </view>
+      
+      <view class="price-row">
+        <view class="form-group half">
+          <view class="form-label required">售价 (¥)</view>
+          <input 
+            class="form-input price-input {{errors.price ? 'error' : ''}}" 
+            placeholder="0.00" 
+            value="{{formData.price}}"
+            data-field="price"
+            bindinput="onFormInput"
+            type="digit"
+          />
+          <text class="error-text" wx:if="{{errors.price}}">{{errors.price}}</text>
+        </view>
+
+        <view class="form-group half">
+          <view class="form-label required">成本价 (¥)</view>
+          <input 
+            class="form-input {{errors.cost ? 'error' : ''}}" 
+            placeholder="0.00" 
+            value="{{formData.cost}}"
+            data-field="cost"
+            bindinput="onFormInput"
+            type="digit"
+          />
+          <text class="error-text" wx:if="{{errors.cost}}">{{errors.cost}}</text>
+        </view>
+      </view>
+
+      <!-- 利润显示 -->
+      <view class="profit-display" wx:if="{{formData.profit !== undefined}}">
+        <view class="profit-item">
+          <text class="profit-label">预计利润：</text>
+          <text class="profit-value {{formData.profit >= 0 ? 'positive' : 'negative'}}">
+            ¥{{formData.profit}}
+          </text>
+        </view>
+        <view class="profit-item" wx:if="{{formData.profitRate}}">
+          <text class="profit-label">利润率：</text>
+          <text class="profit-value {{formData.profitRate >= 0 ? 'positive' : 'negative'}}">
+            {{formData.profitRate}}%
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 库存信息 -->
+    <view class="form-section">
+      <view class="section-header">
+        <text class="section-title">库存信息</text>
+      </view>
+      
+      <view class="stock-row">
+        <view class="form-group half">
+          <view class="form-label required">当前库存</view>
+          <input 
+            class="form-input {{errors.stock ? 'error' : ''}}" 
+            placeholder="0" 
+            value="{{formData.stock}}"
+            data-field="stock"
+            bindinput="onFormInput"
+            type="number"
+          />
+          <text class="error-text" wx:if="{{errors.stock}}">{{errors.stock}}</text>
+        </view>
+
+        <view class="form-group half">
+          <view class="form-label required">最低库存</view>
+          <input 
+            class="form-input {{errors.minStock ? 'error' : ''}}" 
+            placeholder="0" 
+            value="{{formData.minStock}}"
+            data-field="minStock"
+            bindinput="onFormInput"
+            type="number"
+          />
+          <text class="error-text" wx:if="{{errors.minStock}}">{{errors.minStock}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品图片 -->
+    <view class="form-section">
+      <view class="section-header">
+        <text class="section-title">商品图片</text>
+        <text class="section-subtitle">最多上传9张图片</text>
+      </view>
+      
+      <view class="image-upload-area">
+        <view class="image-list">
+          <view class="image-item" wx:for="{{formData.images}}" wx:key="index">
+            <image class="uploaded-image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}" />
+            <view class="image-delete" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          
+          <view class="image-upload-btn" bindtap="chooseImage" wx:if="{{formData.images.length < 9}}">
+            <text class="upload-icon">+</text>
+            <text class="upload-text">添加图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品描述 -->
+    <view class="form-section">
+      <view class="section-header">
+        <text class="section-title">商品描述</text>
+      </view>
+      
+      <view class="form-group">
+        <textarea 
+          class="form-textarea" 
+          placeholder="请输入商品描述信息..." 
+          value="{{formData.description}}"
+          data-field="description"
+          bindinput="onFormInput"
+          maxlength="500"
+          show-confirm-bar="false"
+        />
+        <view class="textarea-counter">{{formData.description.length}}/500</view>
+      </view>
+    </view>
+
+    <!-- 底部安全区域 -->
+    <view class="bottom-safe-area"></view>
+  </scroll-view>
+
+  <!-- 固定底部操作栏 -->
+  <view class="bottom-actions">
+    <view class="action-buttons">
+      <button class="action-btn secondary" bindtap="cancelEdit">取消</button>
+      <button class="action-btn tertiary" bindtap="resetForm">重置</button>
+      <button class="action-btn primary {{submitting ? 'loading' : ''}}" bindtap="saveProduct" disabled="{{submitting}}">
+        {{submitting ? '保存中...' : '保存'}}
+      </button>
+    </view>
+  </view>
+  </view>
+</view>

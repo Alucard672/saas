@@ -1,0 +1,178 @@
+<!--components/dynamic-attributes/dynamic-attributes.wxml-->
+<view class="dynamic-attributes">
+  <view wx:if="{{attributes.length === 0}}" class="no-attributes">
+    <text class="no-attributes-text">请先选择商品分类</text>
+  </view>
+
+  <view wx:for="{{attributes}}" wx:key="id" class="attribute-item">
+    <view class="attribute-label">
+      <text class="label-text">{{item.name}}</text>
+      <text wx:if="{{item.required}}" class="required-mark">*</text>
+    </view>
+
+    <!-- 文本输入 -->
+    <view wx:if="{{item.type === 'text'}}" class="attribute-input">
+      <input
+        class="text-input {{errors[item.id] ? 'error' : ''}}"
+        placeholder="请输入{{item.name}}"
+        value="{{attributeValues[item.id]}}"
+        disabled="{{readonly}}"
+        bindinput="onTextInput"
+        data-id="{{item.id}}"
+      />
+    </view>
+
+    <!-- 数字输入 -->
+    <view wx:if="{{item.type === 'number'}}" class="attribute-input">
+      <input
+        class="number-input {{errors[item.id] ? 'error' : ''}}"
+        type="number"
+        placeholder="请输入{{item.name}}"
+        value="{{attributeValues[item.id]}}"
+        disabled="{{readonly}}"
+        bindinput="onNumberInput"
+        data-id="{{item.id}}"
+      />
+    </view>
+
+    <!-- 单选选择器 -->
+    <view wx:if="{{item.type === 'select'}}" class="attribute-input">
+      <picker
+        class="select-picker {{errors[item.id] ? 'error' : ''}}"
+        mode="selector"
+        range="{{item.options}}"
+        value="{{item.options.indexOf(attributeValues[item.id])}}"
+        disabled="{{readonly}}"
+        bindchange="onPickerChange"
+        data-id="{{item.id}}"
+        data-options="{{item.options}}"
+      >
+        <view class="picker-display">
+          {{attributeValues[item.id] || '请选择' + item.name}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 多选复选框 -->
+    <view wx:if="{{item.type === 'multiSelect'}}" class="attribute-input">
+      <checkbox-group
+        class="checkbox-group {{errors[item.id] ? 'error' : ''}}"
+        bindchange="onCheckboxChange"
+        data-id="{{item.id}}"
+      >
+        <label
+          wx:for="{{item.options}}"
+          wx:for-item="option"
+          wx:key="option"
+          class="checkbox-item"
+        >
+          <checkbox
+            value="{{option}}"
+            checked="{{attributeValues[item.id] && attributeValues[item.id].includes(option)}}"
+            disabled="{{readonly}}"
+          />
+          <text class="checkbox-text">{{option}}</text>
+        </label>
+      </checkbox-group>
+    </view>
+
+    <!-- 布尔开关 -->
+    <view wx:if="{{item.type === 'boolean'}}" class="attribute-input">
+      <switch
+        class="boolean-switch"
+        checked="{{attributeValues[item.id]}}"
+        disabled="{{readonly}}"
+        bindchange="onSwitchChange"
+        data-id="{{item.id}}"
+      />
+    </view>
+
+    <!-- 颜色选择 -->
+    <view wx:if="{{item.type === 'color'}}" class="attribute-input">
+      <view class="color-selector {{errors[item.id] ? 'error' : ''}}">
+        <view class="color-options">
+          <view
+            wx:for="{{colorOptions}}"
+            wx:for-item="color"
+            wx:key="color"
+            class="color-option {{attributeValues[item.id] === color ? 'selected' : ''}}"
+            style="background-color: {{color}}"
+            bindtap="{{readonly ? '' : 'onColorSelect'}}"
+            data-id="{{item.id}}"
+            data-color="{{color}}"
+          >
+            <view wx:if="{{attributeValues[item.id] === color}}" class="color-check">✓</view>
+          </view>
+        </view>
+        <view class="selected-color-display">
+          <text class="selected-color-text">已选择：</text>
+          <view
+            class="selected-color-preview"
+            style="background-color: {{attributeValues[item.id] || '#f0f0f0'}}"
+          ></view>
+          <text class="selected-color-value">{{attributeValues[item.id] || '未选择'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 尺寸选择 -->
+    <view wx:if="{{item.type === 'size'}}" class="attribute-input">
+      <view class="size-selector {{errors[item.id] ? 'error' : ''}}">
+        <view class="size-options">
+          <view
+            wx:for="{{item.options || sizeOptions}}"
+            wx:for-item="size"
+            wx:key="size"
+            class="size-option {{attributeValues[item.id] === size ? 'selected' : ''}}"
+            bindtap="{{readonly ? '' : 'onSizeSelect'}}"
+            data-id="{{item.id}}"
+            data-size="{{size}}"
+          >
+            <text class="size-text">{{size}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view wx:if="{{item.type === 'image'}}" class="attribute-input">
+      <view class="image-upload {{errors[item.id] ? 'error' : ''}}">
+        <view wx:if="{{attributeValues[item.id]}}" class="image-preview">
+          <image class="preview-image" src="{{attributeValues[item.id]}}" mode="aspectFill" />
+          <view wx:if="{{!readonly}}" class="image-actions">
+            <button class="btn-reselect" bindtap="onImageUpload" data-id="{{item.id}}">重新选择</button>
+          </view>
+        </view>
+        <view wx:else class="image-placeholder">
+          <view wx:if="{{!readonly}}" class="upload-btn" bindtap="onImageUpload" data-id="{{item.id}}">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">点击上传{{item.name}}</text>
+          </view>
+          <view wx:else class="no-image-text">暂无图片</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 日期选择 -->
+    <view wx:if="{{item.type === 'date'}}" class="attribute-input">
+      <picker
+        class="date-picker {{errors[item.id] ? 'error' : ''}}"
+        mode="date"
+        value="{{attributeValues[item.id]}}"
+        disabled="{{readonly}}"
+        bindchange="onDateChange"
+        data-id="{{item.id}}"
+      >
+        <view class="picker-display">
+          {{attributeValues[item.id] || '请选择' + item.name}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 错误提示 -->
+    <text wx:if="{{errors[item.id]}}" class="error-text">{{errors[item.id]}}</text>
+
+    <!-- 属性说明 -->
+    <text wx:if="{{item.description}}" class="attribute-description">{{item.description}}</text>
+  </view>
+</view>

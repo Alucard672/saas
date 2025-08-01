@@ -1,0 +1,136 @@
+<!--pages/suppliers/suppliers.wxml-->
+<view class="container">
+  <view class="main-content">
+    <!-- 搜索和筛选区域 -->
+    <view class="search-filter-section">
+      <view class="search-container">
+        <view class="search-box">
+          <linear-icon type="search" size="medium" weight="medium" color="primary"></linear-icon>
+          <input class="search-input" placeholder="搜索厂商名称、联系人或电话" value="{{searchKeyword}}" bindinput="onSearchInput" />
+        </view>
+      </view>
+      
+      <view class="filter-tabs">
+        <view class="filter-tab {{activeFilter === 'all' ? 'active' : ''}}" bindtap="onFilterChange" data-filter="all">
+          <text class="tab-text">全部</text>
+        </view>
+        <view class="filter-tab {{activeFilter === 'core' ? 'active' : ''}}" bindtap="onFilterChange" data-filter="core">
+          <text class="tab-text">核心厂商</text>
+        </view>
+        <view class="filter-tab {{activeFilter === 'regular' ? 'active' : ''}}" bindtap="onFilterChange" data-filter="regular">
+          <text class="tab-text">普通厂商</text>
+        </view>
+        <view class="filter-tab {{activeFilter === 'inactive' ? 'active' : ''}}" bindtap="onFilterChange" data-filter="inactive">
+          <text class="tab-text">停用</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计概览 -->
+    <view class="stats-overview">
+      <view class="overview-card primary">
+        <view class="overview-icon">
+          <linear-icon type="suppliers" size="large" weight="medium" color="white"></linear-icon>
+        </view>
+        <view class="overview-content">
+          <text class="overview-number">{{totalSuppliers}}</text>
+          <text class="overview-label">厂商总数</text>
+        </view>
+      </view>
+      <view class="overview-mini">
+        <view class="mini-card">
+          <text class="mini-number">{{coreSuppliers}}</text>
+          <text class="mini-label">核心厂商</text>
+        </view>
+        <view class="mini-card">
+          <text class="mini-number">{{activeSuppliers}}</text>
+          <text class="mini-label">活跃厂商</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 厂商列表区域 -->
+    <view class="suppliers-section">
+      <view class="section-header">
+        <text class="section-title">厂商列表</text>
+        <text class="section-count">共{{filteredSuppliers.length}}家厂商</text>
+      </view>
+
+      <scroll-view class="suppliers-list" scroll-y="true" wx:if="{{filteredSuppliers.length > 0}}">
+        <view class="supplier-item-wrapper" wx:for="{{filteredSuppliers}}" wx:key="id">
+          <view class="supplier-item {{item.swiped ? 'swiped' : ''}}" bindtap="onSupplierTap" data-supplier="{{item}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" data-index="{{index}}">
+            <view class="status-indicator {{item.level === 'core' ? 'core' : item.level === 'regular' ? 'normal' : 'inactive'}}"></view>
+            
+            <view class="supplier-content">
+              <view class="supplier-header">
+                <view class="supplier-avatar">
+                  <text class="supplier-icon">{{item.avatar || '🏭'}}</text>
+                </view>
+                <view class="supplier-basic">
+                  <text class="supplier-name">{{item.name}}</text>
+                  <text class="supplier-contact">{{item.contactPerson}} - {{item.phone}}</text>
+                  <text class="supplier-level">{{item.levelText}}</text>
+                </view>
+                <view class="supplier-status">
+                  <text class="status-text {{item.level}}">{{item.statusText}}</text>
+                </view>
+              </view>
+
+              <view class="supplier-info">
+                <view class="info-row">
+                  <view class="info-item">
+                    <text class="info-label">合作金额</text>
+                    <text class="info-value price">¥{{item.totalAmount}}</text>
+                  </view>
+                  <view class="info-item">
+                    <text class="info-label">进货次数</text>
+                    <text class="info-value">{{item.orderCount}}次</text>
+                  </view>
+                </view>
+                <view class="info-row">
+                  <view class="info-item">
+                    <text class="info-label">最后进货</text>
+                    <text class="info-value">{{item.lastOrderDate}}</text>
+                  </view>
+                  <view class="info-item">
+                    <text class="info-label">地址</text>
+                    <text class="info-value">{{item.address}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 左滑操作按钮 -->
+          <view class="swipe-actions {{item.swiped ? 'show' : ''}}">
+            <view class="action-btn edit" bindtap="onEditSupplier" data-supplier="{{item}}">
+              <linear-icon type="edit" size="small" weight="medium" color="primary"></linear-icon>
+              <text class="action-text">编辑</text>
+            </view>
+            <view class="action-btn delete" bindtap="onDeleteSupplier" data-supplier="{{item}}">
+              <linear-icon type="delete" size="small" weight="medium" color="danger"></linear-icon>
+              <text class="action-text">删除</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:else>
+        <text class="empty-icon">🏭</text>
+        <text class="empty-title">暂无厂商</text>
+        <text class="empty-subtitle">点击右下角按钮添加第一家厂商</text>
+        <view class="empty-action" bindtap="onAddSupplier">
+          <text class="action-text">添加厂商</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-safe-area"></view>
+  </view>
+
+  <!-- 浮动添加按钮 -->
+  <view class="fab" bindtap="onAddSupplier">
+    <text class="fab-icon">+</text>
+  </view>
+</view>
