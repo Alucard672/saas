@@ -186,6 +186,7 @@ greeting-weather {
   gap: 16rpx;
   width: 100%;
   box-sizing: border-box;
+  margin: 0 20rpx; /* 添加左右边距 */
 }
 
 .action-card {
@@ -195,12 +196,14 @@ greeting-weather {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
   border: 1rpx solid rgba(0, 0, 0, 0.02);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  height: 160rpx; /* 统一高度 */
 }
 
 .action-card::before {
@@ -598,6 +601,7 @@ greeting-weather {
   display: flex;
   justify-content: space-between;
   gap: 15rpx; /* 从20rpx减小到15rpx */
+  margin: 0 20rpx; /* 添加左右边距 */
 }
 
 .action-item {

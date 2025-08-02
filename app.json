@@ -2,10 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/products/products",
-    "pages/add-product/add-product",
     "pages/product-add/product-add",
-    "pages/sales/sales",
-    "pages/add-sale/add-sale",
+    "pages/order-manage/order-manage",
     "pages/statistics/statistics",
     "pages/settings/settings",
     "pages/profile/profile",
@@ -13,20 +11,20 @@
     "pages/unit-manage/unit-manage",
     "pages/unit-edit/unit-edit",
     "pages/product-edit/product-edit",
-    "pages/sale-edit/sale-edit",
     "pages/product-attributes/product-attributes",
     "pages/customers/customers",
     "pages/customer-edit/customer-edit",
     "pages/suppliers/suppliers",
     "pages/supplier-edit/supplier-edit",
-    "pages/purchase-orders/purchase-orders",
-    "pages/purchase-order-edit/purchase-order-edit",
-    "pages/revenue-flow/revenue-flow"
+    "pages/revenue-flow/revenue-flow",
+    "pages/product-select/product-select"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f8f9fa"
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#ff6b9d",
+    "backgroundColor": "#f8f9fa",
+    "navigationStyle": "default",
+    "enablePullDownRefresh": false
   },
   "tabBar": {
     "color": "#999999",
@@ -47,8 +45,8 @@
         "selectedIconPath": "images/products-active.png"
       },
       {
-        "pagePath": "pages/sales/sales",
-        "text": "销售",
+        "pagePath": "pages/order-manage/order-manage",
+        "text": "单据",
         "iconPath": "images/sales.png",
         "selectedIconPath": "images/sales-active.png"
       },

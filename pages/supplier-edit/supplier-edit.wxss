@@ -17,7 +17,7 @@
 
 /* 导航栏样式 */
 .nav-bar {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   padding: 60rpx 30rpx 30rpx;
   display: flex;
   justify-content: space-between;
@@ -148,7 +148,7 @@
 }
 
 .form-input:focus {
-  border-color: #4facfe;
+  border-color: #ff6b9d;
   background: #ffffff;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .form-textarea:focus {
-  border-color: #4facfe;
+  border-color: #ff6b9d;
   background: #ffffff;
 }
 
@@ -231,17 +231,17 @@
 
 .save-btn {
   flex: 1;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   border-radius: 16rpx;
   padding: 30rpx;
   text-align: center;
-  box-shadow: 0 4rpx 20rpx rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 157, 0.3);
   transition: all 0.3s ease;
 }
 
 .save-btn:active {
   transform: scale(0.98);
-  box-shadow: 0 2rpx 10rpx rgba(79, 172, 254, 0.4);
+  box-shadow: 0 2rpx 10rpx rgba(255, 107, 157, 0.4);
 }
 
 .save-btn-text {

@@ -18,7 +18,7 @@
       </view>
       
       <view class="secondary-stats">
-        <view class="mini-stat">
+        <view class="mini-stat" bindtap="goToInventoryList">
           <view class="mini-value">{{totalProducts}}</view>
           <view class="mini-label">商品总数</view>
         </view>
@@ -48,16 +48,16 @@
         
         <view class="action-card secondary" bindtap="goToAddSale">
           <image class="action-icon" src="/images/create-order-colored.png" mode="aspectFit"></image>
-          <text class="action-title">创建订单</text>
+          <text class="action-title">销售单据</text>
         </view>
         
         <view class="action-card tertiary" bindtap="goToPurchase">
           <image class="action-icon" src="/images/purchase-order-colored.png" mode="aspectFit"></image>
-          <text class="action-title">进货单</text>
+          <text class="action-title">采购单据</text>
         </view>
         
         <view class="action-card quaternary" bindtap="goToRevenueFlow">
-          <linear-icon type="chart-line" size="large" weight="medium" color="primary" class="action-icon-linear"></linear-icon>
+          <linear-icon type="currency-yen" size="large" weight="medium" color="primary" class="action-icon-linear"></linear-icon>
           <text class="action-title">收入流水</text>
         </view>
       </view>

@@ -151,7 +151,7 @@
 }
 
 .color-option.selected {
-  border-color: #667eea;
+  border-color: #ff6b9d;
   border-width: 4rpx;
   transform: scale(1.1);
 }
@@ -219,9 +219,9 @@
 }
 
 .size-option.selected {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
-  border-color: #667eea;
+  border-color: #ff6b9d;
   transform: translateY(-2rpx);
 }
 

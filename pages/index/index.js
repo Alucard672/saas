@@ -57,6 +57,13 @@ Page({
     // 每次显示页面时刷新数据
     this.loadDashboardData()
   },
+  
+  // 点击商品总数跳转到库存列表
+  goToInventoryList: function() {
+    wx.switchTab({
+      url: '/pages/products/products'
+    })
+  },
 
   // 加载仪表板数据
   loadDashboardData: function () {
@@ -82,21 +89,21 @@ Page({
   // 页面跳转方法
   goToAddProduct: function () {
     wx.navigateTo({
-      url: '/pages/add-product/add-product'
+      url: '/pages/product-add/product-add'
     })
   },
 
 
   goToAddSale: function () {
     wx.navigateTo({
-      url: '/pages/add-sale/add-sale'
+      url: '/pages/order-manage/order-manage?type=sale'
     })
   },
 
   // 新增功能导航方法
   goToPurchase: function () {
     wx.navigateTo({
-      url: '/pages/purchase-orders/purchase-orders'
+      url: '/pages/order-manage/order-manage?type=purchase'
     })
   },
 

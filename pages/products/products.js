@@ -21,11 +21,13 @@ Page({
     totalValue: 0,
     // 筛选相关
     currentFilter: 'all',
+    currentCategory: 'all',
     filteredProducts: [],
     allProducts: [],
     normalProducts: [],
     lowStockProducts: [],
     outOfStockProducts: [],
+    categories: ['all', '手机', '电脑', '平板'],
     // 左滑操作相关
     swipeItems: {},
     touchStartX: 0,
@@ -104,7 +106,7 @@ Page({
         price: 5999,
         stock: 25,
         minStock: 10,
-        image: '/images/product1.jpg',
+        image: '',
         status: 'normal',
         createTime: '2024-01-15',
         sales: 156
@@ -117,7 +119,7 @@ Page({
         price: 6999,
         stock: 8,
         minStock: 10,
-        image: '/images/product2.jpg',
+        image: '',
         status: 'low_stock',
         createTime: '2024-01-14',
         sales: 89
@@ -130,7 +132,7 @@ Page({
         price: 3999,
         stock: 0,
         minStock: 5,
-        image: '/images/product3.jpg',
+        image: '',
         status: 'out_of_stock',
         createTime: '2024-01-13',
         sales: 234
@@ -143,7 +145,7 @@ Page({
         price: 12999,
         stock: 15,
         minStock: 5,
-        image: '/images/product4.jpg',
+        image: '',
         status: 'normal',
         createTime: '2024-01-12',
         sales: 45
@@ -156,7 +158,7 @@ Page({
         price: 4599,
         stock: 3,
         minStock: 8,
-        image: '/images/product5.jpg',
+        image: '',
         status: 'low_stock',
         createTime: '2024-01-11',
         sales: 67
@@ -211,20 +213,10 @@ Page({
 
   // 执行搜索
   searchProducts(keyword) {
-    if (!keyword.trim()) {
-      this.setData({
-        filteredProducts: this.data.allProducts
-      });
-      return;
-    }
-
-    const filtered = this.data.allProducts.filter(product => 
-      product.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      product.code.toLowerCase().includes(keyword.toLowerCase())
-    );
-
     this.setData({
-      filteredProducts: filtered
+      searchKeyword: keyword
+    }, () => {
+      this.applyFilters();
     });
   },
 
@@ -235,35 +227,76 @@ Page({
     });
   },
 
+  // 应用筛选条件
+  applyFilters() {
+    let filtered = [...this.data.allProducts];
+    
+    // 按状态筛选
+    if (this.data.currentFilter !== 'all') {
+      filtered = filtered.filter(p => p.status === this.data.currentFilter);
+    }
+    
+    // 按类别筛选
+    if (this.data.currentCategory !== 'all') {
+      filtered = filtered.filter(p => p.category === this.data.currentCategory);
+    }
+    
+    // 应用搜索关键词
+    if (this.data.searchKeyword.trim()) {
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes(this.data.searchKeyword.toLowerCase()) ||
+        product.code.toLowerCase().includes(this.data.searchKeyword.toLowerCase())
+      );
+    }
+    
+    this.setData({
+      filteredProducts: filtered
+    });
+  },
+
   // 筛选商品 - 全部
   filterAll() {
     this.setData({
-      currentFilter: 'all',
-      filteredProducts: this.data.allProducts
+      currentFilter: 'all'
+    }, () => {
+      this.applyFilters();
     });
   },
 
   // 筛选商品 - 正常
   filterNormal() {
     this.setData({
-      currentFilter: 'normal',
-      filteredProducts: this.data.normalProducts
+      currentFilter: 'normal'
+    }, () => {
+      this.applyFilters();
     });
   },
 
   // 筛选商品 - 低库存
   filterLowStock() {
     this.setData({
-      currentFilter: 'low_stock',
-      filteredProducts: this.data.lowStockProducts
+      currentFilter: 'low_stock'
+    }, () => {
+      this.applyFilters();
     });
   },
 
   // 筛选商品 - 缺货
   filterOutOfStock() {
     this.setData({
-      currentFilter: 'out_of_stock',
-      filteredProducts: this.data.outOfStockProducts
+      currentFilter: 'out_of_stock'
+    }, () => {
+      this.applyFilters();
+    });
+  },
+  
+  // 按类别筛选
+  filterByCategory(e) {
+    const category = e.currentTarget.dataset.category;
+    this.setData({
+      currentCategory: category
+    }, () => {
+      this.applyFilters();
     });
   },
 
@@ -372,7 +405,7 @@ Page({
     // 判断是否为水平滑动
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
       const productId = e.currentTarget.dataset.id;
-      const swipeItems = { ...this.data.swipeItems };
+      const swipeItems = {};  // 创建新对象，确保只有一个商品处于左滑状态
       
       if (deltaX < -50) {
         // 左滑显示操作按钮

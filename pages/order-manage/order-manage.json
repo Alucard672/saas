@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "单据管理",
+  "navigationBarBackgroundColor": "#ff6b9d",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50,
+  "backgroundTextStyle": "light"
+}

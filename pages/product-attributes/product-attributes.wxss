@@ -1,8 +1,8 @@
 /* pages/product-attributes/product-attributes.wxss */
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20rpx;
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
+  padding: 0;
 }
 
 .main-content {
@@ -89,11 +89,11 @@
 }
 
 .category-item.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
-  border-color: #667eea;
+  border-color: #ff6b9d;
   transform: translateY(-4rpx);
-  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.3);
 }
 
 .category-info {
@@ -155,7 +155,7 @@
   margin-bottom: 20rpx;
   background: #f8f9fa;
   border-radius: 16rpx;
-  border-left: 8rpx solid #667eea;
+  border-left: 8rpx solid #ff6b9d;
 }
 
 .attribute-info {
@@ -272,7 +272,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 30rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
 }
 
@@ -321,7 +321,7 @@
 }
 
 .btn-confirm {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
 }
 
@@ -399,7 +399,7 @@
 
 .template-btn {
   padding: 16rpx 24rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
   border: none;
   border-radius: 50rpx;

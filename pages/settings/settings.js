@@ -4,8 +4,8 @@ const app = getApp()
 Page({
   data: {
     userInfo: {
-      nickName: '用户昵称',
-      avatarUrl: '/images/default-avatar.png'
+      nickname: '用户昵称',
+      avatarUrl: ''
     },
     settings: {
       notifications: true,

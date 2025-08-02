@@ -25,6 +25,24 @@
           <text class="tab-text">缺货</text>
         </view>
       </view>
+      
+      <!-- 类别筛选 -->
+      <view class="category-filter">
+        <view class="filter-tabs">
+          <view class="filter-tab {{currentCategory === 'all' ? 'active' : ''}}" bindtap="filterByCategory" data-category="all">
+            <text class="tab-text">全部类别</text>
+          </view>
+          <view class="filter-tab {{currentCategory === '手机' ? 'active' : ''}}" bindtap="filterByCategory" data-category="手机">
+            <text class="tab-text">手机</text>
+          </view>
+          <view class="filter-tab {{currentCategory === '电脑' ? 'active' : ''}}" bindtap="filterByCategory" data-category="电脑">
+            <text class="tab-text">电脑</text>
+          </view>
+          <view class="filter-tab {{currentCategory === '平板' ? 'active' : ''}}" bindtap="filterByCategory" data-category="平板">
+            <text class="tab-text">平板</text>
+          </view>
+        </view>
+      </view>
     </view>
 
     <!-- 统计概览 -->
@@ -111,11 +129,9 @@
           <!-- 左滑操作按钮 -->
           <view class="swipe-actions {{swipeItems[item.id] ? 'show' : ''}}">
             <view class="action-btn edit" catchtap="editProduct" data-id="{{item.id}}">
-              <linear-icon type="edit" size="small" weight="regular" color="primary" class="action-icon"></linear-icon>
               <text class="action-text">编辑</text>
             </view>
             <view class="action-btn delete" catchtap="deleteProduct" data-id="{{item.id}}">
-              <linear-icon type="delete" size="small" weight="regular" color="danger" class="action-icon"></linear-icon>
               <text class="action-text">删除</text>
             </view>
           </view>

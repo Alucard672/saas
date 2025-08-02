@@ -82,6 +82,11 @@
   padding-bottom: 8rpx;
 }
 
+/* 类别筛选 */
+.category-filter {
+  margin-top: 12rpx;
+}
+
 .filter-tab {
   background: #ffffff;
   border-radius: 20rpx;
@@ -462,7 +467,7 @@
 }
 
 .swipe-actions .action-btn.edit {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
 .swipe-actions .action-btn.delete {

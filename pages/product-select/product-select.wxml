@@ -1,0 +1,82 @@
+<!--pages/product-select/product-select.wxml-->
+<view class="container">
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-title">
+      <linear-icon type="package" size="medium" weight="medium" color="primary"></linear-icon>
+      <text class="nav-text">选择商品</text>
+    </view>
+    <view class="nav-actions">
+      <view class="nav-btn" bindtap="goBack">
+        <text class="nav-btn-emoji">←</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索区域 -->
+  <view class="search-section">
+    <view class="search-box">
+      <linear-icon type="search" size="medium" weight="regular" color="secondary" class="search-icon"></linear-icon>
+      <input class="search-input" placeholder="搜索商品名称或编码" value="{{searchKeyword}}" bindinput="onSearchInput" />
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="category-filter">
+    <scroll-view class="filter-scroll" scroll-x="true">
+      <view class="filter-tabs">
+        <view class="filter-tab {{currentCategory === 'all' ? 'active' : ''}}" bindtap="filterByCategory" data-category="all">
+          <text class="tab-text">全部</text>
+        </view>
+        <view class="filter-tab {{currentCategory === '手机' ? 'active' : ''}}" bindtap="filterByCategory" data-category="手机">
+          <text class="tab-text">手机</text>
+        </view>
+        <view class="filter-tab {{currentCategory === '电脑' ? 'active' : ''}}" bindtap="filterByCategory" data-category="电脑">
+          <text class="tab-text">电脑</text>
+        </view>
+        <view class="filter-tab {{currentCategory === '平板' ? 'active' : ''}}" bindtap="filterByCategory" data-category="平板">
+          <text class="tab-text">平板</text>
+        </view>
+        <view class="filter-tab {{currentCategory === '配件' ? 'active' : ''}}" bindtap="filterByCategory" data-category="配件">
+          <text class="tab-text">配件</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 商品列表 -->
+  <scroll-view class="main-content" scroll-y="true">
+    <view class="products-list">
+      <view class="product-item" wx:for="{{filteredProducts}}" wx:key="id" bindtap="selectProduct" data-product="{{item}}">
+        <view class="product-info">
+          <view class="product-avatar">
+            <text class="product-emoji">{{item.emoji}}</text>
+          </view>
+          <view class="product-details">
+            <text class="product-name">{{item.name}}</text>
+            <text class="product-code">{{item.code}}</text>
+            <text class="product-category">{{item.category}}</text>
+          </view>
+        </view>
+        <view class="product-meta">
+          <view class="product-price">¥{{item.price}}</view>
+          <view class="product-stock">
+            <text class="stock-label">库存:</text>
+            <text class="stock-value {{item.stock <= 10 ? 'low' : ''}}">{{item.stock}}</text>
+            <text class="stock-unit">{{item.unit}}</text>
+          </view>
+        </view>
+        <view class="select-indicator">
+          <linear-icon type="chevron-right" size="small" weight="regular" color="muted"></linear-icon>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{filteredProducts.length === 0}}">
+      <linear-icon type="package" size="xlarge" weight="thin" color="muted" class="empty-icon"></linear-icon>
+      <text class="empty-title">{{searchKeyword ? '未找到相关商品' : '暂无商品'}}</text>
+      <text class="empty-subtitle">{{searchKeyword ? '试试其他关键词' : '请先添加商品'}}</text>
+    </view>
+  </scroll-view>
+</view>

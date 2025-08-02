@@ -8,7 +8,7 @@
 
 .main-content {
   flex: 1;
-  padding: 0 24rpx;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -18,7 +18,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 32rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
 }
 
@@ -67,7 +67,7 @@
 
 .child-card {
   margin: 16rpx 0 0 32rpx;
-  border-left: 4rpx solid #667eea;
+  border-left: 4rpx solid #ff6b9d;
 }
 
 .category-header {
@@ -235,7 +235,7 @@
   align-items: center;
   padding: 32rpx;
   border-bottom: 1rpx solid #f0f0f0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
   color: white;
 }
 
@@ -292,9 +292,9 @@
 
 .form-input:focus,
 .form-textarea:focus {
-  border-color: #667eea;
+  border-color: #ff6b9d;
   background: white;
-  box-shadow: 0 0 0 6rpx rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 6rpx rgba(255, 107, 157, 0.1);
 }
 
 .form-input.error,
@@ -357,7 +357,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: white;
 }
 

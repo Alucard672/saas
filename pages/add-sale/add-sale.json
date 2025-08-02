@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "linear-icon": "/components/linear-icon/linear-icon"
-  },
-  "navigationBarTitleText": "创建订单"
-}

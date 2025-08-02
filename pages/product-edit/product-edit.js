@@ -61,7 +61,7 @@ Page({
         minStock: 10,
         description: '最新款苹果手机，性能强劲',
         unit: '台',
-        images: ['/images/product1.jpg']
+        images: []
       },
       {
         id: '2',
@@ -74,7 +74,7 @@ Page({
         minStock: 10,
         description: '华为旗舰手机',
         unit: '台',
-        images: ['/images/product2.jpg']
+        images: []
       },
       {
         id: '3',
@@ -87,7 +87,7 @@ Page({
         minStock: 5,
         description: '小米高性价比手机',
         unit: '台',
-        images: ['/images/product3.jpg']
+        images: []
       },
       {
         id: '4',
@@ -100,7 +100,7 @@ Page({
         minStock: 5,
         description: '苹果专业笔记本电脑',
         unit: '台',
-        images: ['/images/product4.jpg']
+        images: []
       },
       {
         id: '5',
@@ -113,7 +113,7 @@ Page({
         minStock: 8,
         description: '苹果平板电脑',
         unit: '台',
-        images: ['/images/product5.jpg']
+        images: []
       }
     ];
 

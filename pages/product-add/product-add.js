@@ -338,7 +338,14 @@ Page({
   // 取消操作
   cancelForm() {
     const { formData, imageList } = this.data;
-    const hasData = Object.values(formData).some(value => value.trim()) || imageList.length > 0;
+    const hasData = Object.values(formData).some(value => {
+      if (typeof value === 'string') {
+        return value.trim();
+      } else if (typeof value === 'object' && value !== null) {
+        return Object.keys(value).length > 0;
+      }
+      return value;
+    }) || imageList.length > 0;
 
     if (hasData) {
       wx.showModal({

@@ -64,7 +64,7 @@
 
 /* 原始数据参考区域 */
 .reference-section {
-  margin: 24rpx 0;
+  margin: 24rpx;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 16rpx;
   overflow: hidden;
@@ -73,7 +73,7 @@
 
 .reference-header {
   padding: 24rpx 32rpx 16rpx;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
 }
 
 .reference-title {
@@ -138,9 +138,10 @@
 }
 
 .form-content {
-  background: rgba(255, 255, 255, 0.95);
+  margin: 0 24rpx 24rpx 24rpx;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16rpx;
-  padding: 32rpx;
+  overflow: hidden;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
 }
 
@@ -190,8 +191,8 @@
 }
 
 .form-input:focus, .form-textarea:focus {
-  border-color: #007AFF;
-  box-shadow: 0 0 0 4rpx rgba(0, 122, 255, 0.1);
+  border-color: #ff6b9d;
+  box-shadow: 0 0 0 4rpx rgba(255, 107, 157, 0.1);
 }
 
 .form-input.error, .form-textarea.error {
@@ -309,7 +310,7 @@
 
 .arrow {
   font-size: 20rpx;
-  color: #007AFF;
+  color: #ff6b9d;
 }
 
 .new-value {
@@ -319,8 +320,8 @@
 }
 
 .new-value.highlight {
-  color: #007AFF;
-  background: rgba(0, 122, 255, 0.1);
+  color: #ff6b9d;
+  background: rgba(255, 107, 157, 0.1);
   padding: 4rpx 8rpx;
   border-radius: 4rpx;
 }
@@ -369,9 +370,9 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #007AFF 0%, #5856d6 100%);
+  background: linear-gradient(135deg, #ff6b9d 0%, #fa709a 100%);
   color: #fff;
-  box-shadow: 0 4rpx 16rpx rgba(0, 122, 255, 0.3);
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 157, 0.3);
 }
 
 .btn-primary:active {
