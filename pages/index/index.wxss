@@ -163,6 +163,8 @@ greeting-weather {
 /* 快捷操作区域样式 */
 .quick-actions {
   margin-bottom: 32rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
 }
 
 .section-header {
@@ -183,10 +185,10 @@ greeting-weather {
 .actions-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16rpx;
+  gap: 15rpx;
   width: 100%;
   box-sizing: border-box;
-  margin: 0 20rpx; /* 添加左右边距 */
+  margin: 0; /* 移除边距，因为父容器已经有边距了 */
 }
 
 .action-card {
@@ -601,7 +603,7 @@ greeting-weather {
   display: flex;
   justify-content: space-between;
   gap: 15rpx; /* 从20rpx减小到15rpx */
-  margin: 0 20rpx; /* 添加左右边距 */
+  margin: 0 10rpx; /* 与统计卡片保持一致的边距 */
 }
 
 .action-item {
